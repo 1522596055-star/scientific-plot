@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0009",
+  "chart_type": "two_panel_horizontal_bar",
+  "reference_image": "ref/pdf_selected/sample_0009_idt_sensitivity_bars.jpg",
+  "source_pdf": "pdf/ir_hychem_infrared_aviation_fuels.pdf",
+  "data_sources": [
+    "data/shared/categorical_measurements_v1.csv"
+  ],
+  "script": "samples/bar/sample_0009/plot.py",
+  "readme": "samples/bar/sample_0009/README.md",
+  "output": "samples/bar/sample_0009/output.png",
+  "selection": {
+    "figure_group": "idt_sensitivity"
+  },
+  "notes": [
+    "Selected as the most reusable figure from its source PDF."
+  ]
+}

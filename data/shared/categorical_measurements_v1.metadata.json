@@ -1,0 +1,54 @@
+{
+  "dataset_id": "categorical_measurements_v1",
+  "description": "Compressed shared categorical measurement dataset for grouped-bar combustion species plots.",
+  "row_count": 82,
+  "source_seed": 20260401,
+  "columns": {
+    "dataset_id": "Shared dataset identifier.",
+    "figure_group": "High-level figure family.",
+    "condition_id": "Condition key used to select a subgroup.",
+    "condition_label": "Human-readable condition label.",
+    "category_id": "Category key shown on the x-axis.",
+    "mean_value": "Mean plotted value after scale normalization.",
+    "std_value": "Standard deviation across compressed replicates.",
+    "scale_power": "Power used in the category-specific axis scale."
+  },
+  "figure_groups": {
+    "combustion_intermediates": {
+      "condition_ids": [
+        "0.8",
+        "1.0",
+        "1.2",
+        "1.4"
+      ],
+      "category_order": [
+        "NO",
+        "HNO",
+        "OH",
+        "O",
+        "H",
+        "O2",
+        "NH2",
+        "NH",
+        "N"
+      ],
+      "y_label": "Integrated mole fractions (m^3)"
+    },
+    "nh_no_sensitivity": {
+      "panel_ids": [
+        "a",
+        "b"
+      ],
+      "x_label": "Normalized NO sensitivity",
+      "chart_hint": "horizontal_bar"
+    },
+    "idt_sensitivity": {
+      "panel_ids": [
+        "a",
+        "b"
+      ],
+      "x_label": "Sensitivity coefficient",
+      "chart_hint": "horizontal_bar"
+    }
+  }
+}

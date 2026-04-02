@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0010",
+  "chart_type": "two_panel_line",
+  "reference_image": "ref/pdf_selected/sample_0010_engine_n_emissions_vs_lambda.jpg",
+  "source_pdf": "pdf/equivalence_ratio_dual_fuel_ammonia_diesel_engine.pdf",
+  "data_sources": [
+    "data/shared/profile_series_v1.csv"
+  ],
+  "script": "samples/multi_panel/sample_0010/plot.py",
+  "readme": "samples/multi_panel/sample_0010/README.md",
+  "output": "samples/multi_panel/sample_0010/output.png",
+  "selection": {
+    "figure_group": "engine_n_emissions"
+  },
+  "notes": [
+    "Selected as the most reusable figure from its source PDF."
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "skill_name": "scientific-plotter",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I don't know the best chart here. Please turn this csv into a paper-style figure that compares the fresh and aged catalyst results clearly. Give me both the rendered image and the Python script.",
+      "expected_output": "The skill should infer a grouped comparison chart from the raw table and produce a standalone plot.py plus output image.",
+      "files": [
+        "evals/fixtures/catalyst_species_summary.csv"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Here is a dataset from an engine scan. I want something publication-like, but I am not sure what chart type is best. Please choose a good scientific visualization and return both the png and the plotting script.",
+      "expected_output": "The skill should infer a shared-x multi-panel or equivalent scientific trend figure from the raw data and produce plot.py plus output image.",
+      "files": [
+        "evals/fixtures/engine_scan.csv"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Please visualize this method similarity table in a scientific way. I care about readability and publication style more than flashy design. Return the figure and the python script.",
+      "expected_output": "The skill should infer a heatmap-like representation from the matrix-style data and produce plot.py plus output image.",
+      "files": [
+        "evals/fixtures/method_similarity.tsv"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I have repeated conversion measurements for several treatments. Pick a chart that shows the comparison scientifically and give me the final image plus the python plotting script.",
+      "expected_output": "The skill should prefer a distribution-oriented chart such as a boxplot, then produce plot.py plus output image.",
+      "files": [
+        "evals/fixtures/treatment_repeats.csv"
+      ]
+    }
+  ]
+}

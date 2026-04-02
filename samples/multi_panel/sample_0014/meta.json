@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0014",
+  "chart_type": "two_panel_line",
+  "reference_image": "ref/pdf_selected/sample_0014_rcci_efficiency_vs_per.jpg",
+  "source_pdf": "pdf/ammonia_methanol_diesel_rcci_marine_engines.pdf",
+  "data_sources": [
+    "data/shared/profile_series_v1.csv"
+  ],
+  "script": "samples/multi_panel/sample_0014/plot.py",
+  "readme": "samples/multi_panel/sample_0014/README.md",
+  "output": "samples/multi_panel/sample_0014/output.png",
+  "selection": {
+    "figure_group": "rcci_efficiency"
+  },
+  "notes": [
+    "Selected as the most reusable figure from its source PDF."
+  ]
+}

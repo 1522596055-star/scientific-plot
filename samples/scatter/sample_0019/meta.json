@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0019",
+  "chart_type": "bubble_scatter",
+  "reference_image": null,
+  "reference_note": "Common chart coverage sample without external paper reference.",
+  "data_sources": [
+    "data/shared/scatter_points_v1.csv"
+  ],
+  "script": "samples/scatter/sample_0019/plot.py",
+  "readme": "samples/scatter/sample_0019/README.md",
+  "output": "samples/scatter/sample_0019/output.png",
+  "selection": {
+    "figure_group": "cluster_embedding"
+  },
+  "notes": [
+    "Coverage sample added to improve chart-type diversity in the dataset."
+  ]
+}

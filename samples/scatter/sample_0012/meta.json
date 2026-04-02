@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0012",
+  "chart_type": "log_scatter",
+  "reference_image": "ref/pdf_selected/sample_0012_ignition_delay_comparison.jpg",
+  "source_pdf": "pdf/cycloalkane_additives_hefa_pyrolysis_ignition.pdf",
+  "data_sources": [
+    "data/shared/profile_series_v1.csv"
+  ],
+  "script": "samples/scatter/sample_0012/plot.py",
+  "readme": "samples/scatter/sample_0012/README.md",
+  "output": "samples/scatter/sample_0012/output.png",
+  "selection": {
+    "figure_group": "ignition_delay_comparison"
+  },
+  "notes": [
+    "Selected as the most reusable figure from its source PDF."
+  ]
+}

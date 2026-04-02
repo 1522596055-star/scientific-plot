@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0017",
+  "chart_type": "violin",
+  "reference_image": null,
+  "reference_note": "Common chart coverage sample without external paper reference.",
+  "data_sources": [
+    "data/shared/distribution_measurements_v1.csv"
+  ],
+  "script": "samples/distribution/sample_0017/plot.py",
+  "readme": "samples/distribution/sample_0017/README.md",
+  "output": "samples/distribution/sample_0017/output.png",
+  "selection": {
+    "figure_group": "cell_response_distribution"
+  },
+  "notes": [
+    "Coverage sample added to improve chart-type diversity in the dataset."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0013",
+  "chart_type": "multi_line",
+  "reference_image": "ref/pdf_selected/sample_0013_polymer_mass_loss_heating_rate.jpg",
+  "source_pdf": "pdf/polymer_pyrolysis_lumped_models_pmma_pom.pdf",
+  "data_sources": [
+    "data/shared/profile_series_v1.csv"
+  ],
+  "script": "samples/line/sample_0013/plot.py",
+  "readme": "samples/line/sample_0013/README.md",
+  "output": "samples/line/sample_0013/output.png",
+  "selection": {
+    "figure_group": "polymer_mass_loss"
+  },
+  "notes": [
+    "Selected as the most reusable figure from its source PDF."
+  ]
+}

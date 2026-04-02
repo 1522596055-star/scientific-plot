@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0007",
+  "chart_type": "two_panel_profile_comparison",
+  "reference_image": "ref/pdf_selected/sample_0007_ells_profile_comparison.jpg",
+  "source_pdf": "pdf/soot_precursors_pmlf_pentamethyl_heptane.pdf",
+  "data_sources": [
+    "data/shared/profile_series_v1.csv"
+  ],
+  "script": "samples/multi_panel/sample_0007/plot.py",
+  "readme": "samples/multi_panel/sample_0007/README.md",
+  "output": "samples/multi_panel/sample_0007/output.png",
+  "selection": {
+    "figure_group": "ells_profile_comparison"
+  },
+  "notes": [
+    "Selected as the most reusable figure from its source PDF."
+  ]
+}

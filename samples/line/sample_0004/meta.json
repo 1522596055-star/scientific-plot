@@ -1,0 +1,23 @@
+{
+  "sample_id": "sample_0004",
+  "chart_type": "single_panel_line_with_inset",
+  "reference_image": "ref/image_selected/sample_0004_heat_release_profiles_with_inset.jpg",
+  "data_sources": [
+    "data/shared/profile_series_v1.csv"
+  ],
+  "script": "samples/line/sample_0004/plot.py",
+  "readme": "samples/line/sample_0004/README.md",
+  "output": "samples/line/sample_0004/output.png",
+  "selection": {
+    "figure_group": "heat_release_profiles",
+    "series_ids": [
+      "heat_base",
+      "heat_no_1pct",
+      "heat_no_10_4pct"
+    ]
+  },
+  "notes": [
+    "This sample now reads from the compressed shared profile dataset.",
+    "The inset shows the low-intensity region on the left side of the main curve."
+  ]
+}

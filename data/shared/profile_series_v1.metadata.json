@@ -1,0 +1,379 @@
+{
+  "dataset_id": "profile_series_v1",
+  "description": "Compressed shared profile dataset for line, point, error-bar, and inset combustion figures.",
+  "row_count": 1218,
+  "columns": {
+    "dataset_id": "Shared dataset identifier.",
+    "figure_group": "High-level figure family.",
+    "panel_id": "Panel key inside a multi-panel figure or main for single-panel figures.",
+    "series_id": "Unique series identifier used by plotting scripts.",
+    "series_type": "line or point.",
+    "condition_id": "Condition key such as base, no_1pct, 4_1, or simulation.",
+    "reaction_id": "Reaction key when applicable, otherwise empty.",
+    "species": "Species key when applicable, otherwise empty.",
+    "x_value": "Primary x-axis value.",
+    "y_value": "Primary y-axis value.",
+    "error_low": "Lower uncertainty for point series.",
+    "error_high": "Upper uncertainty for point series."
+  },
+  "compression_note": "Style and axis configuration were moved out of row-level storage to reduce repetition.",
+  "figure_groups": {
+    "combustion_no_profiles": {
+      "x_label": "Height above burner (mm)",
+      "y_label": "NO mole fraction (ppm)",
+      "panels": {
+        "a": {
+          "title": "(a) mechanism comparison",
+          "condition_tag": "CH4/NH3/O2/N2, phi=0.9",
+          "x_lim": [
+            -0.2,
+            20.0
+          ],
+          "y_lim": [
+            0.0,
+            5500.0
+          ]
+        },
+        "b": {
+          "title": "(b) O2/N2 = 0.21 / 0.79",
+          "condition_tag": "phi=0.9",
+          "x_lim": [
+            -0.2,
+            16.0
+          ],
+          "y_lim": [
+            0.0,
+            5000.0
+          ]
+        },
+        "c": {
+          "title": "(c) O2/N2 = 0.35 / 0.65",
+          "condition_tag": "phi=0.9",
+          "x_lim": [
+            -0.2,
+            16.0
+          ],
+          "y_lim": [
+            0.0,
+            7000.0
+          ]
+        }
+      }
+    },
+    "temperature_species_profiles": {
+      "x_label": "Temperature (K)",
+      "y_label": "Mole fraction (10^-3)",
+      "panels": {
+        "a": {
+          "species": "C2H4",
+          "x_lim": [
+            725,
+            1075
+          ],
+          "y_lim": [
+            -0.25,
+            1.75
+          ],
+          "y_ticks": [
+            0.0,
+            0.5,
+            1.0,
+            1.5
+          ]
+        },
+        "b": {
+          "species": "CH2O",
+          "x_lim": [
+            725,
+            1075
+          ],
+          "y_lim": [
+            -0.25,
+            1.75
+          ],
+          "y_ticks": [
+            0.0,
+            0.5,
+            1.0,
+            1.5
+          ]
+        },
+        "c": {
+          "species": "CH3OH",
+          "x_lim": [
+            725,
+            1075
+          ],
+          "y_lim": [
+            -0.1,
+            0.39
+          ],
+          "y_ticks": [
+            0.0,
+            0.12,
+            0.24,
+            0.36
+          ]
+        },
+        "d": {
+          "species": "CH3CHO",
+          "x_lim": [
+            725,
+            1075
+          ],
+          "y_lim": [
+            -0.02,
+            0.13
+          ],
+          "y_ticks": [
+            0.0,
+            0.04,
+            0.08,
+            0.12
+          ]
+        },
+        "e": {
+          "species": "CH4",
+          "x_lim": [
+            725,
+            1075
+          ],
+          "y_lim": [
+            -0.1,
+            0.52
+          ],
+          "y_ticks": [
+            0.0,
+            0.16,
+            0.32,
+            0.48
+          ]
+        },
+        "f": {
+          "species": "COC*C",
+          "x_lim": [
+            700,
+            1100
+          ],
+          "y_lim": [
+            -0.1,
+            0.52
+          ],
+          "y_ticks": [
+            0.0,
+            0.16,
+            0.32,
+            0.48
+          ]
+        }
+      }
+    },
+    "heat_release_profiles": {
+      "x_label": "x [cm]",
+      "y_label": "Heat Release Rate [W/cm^3]",
+      "top_axis_map": {
+        "ticks": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          5.5
+        ],
+        "labels": [
+          "939",
+          "1033",
+          "1139",
+          "1261",
+          "1350"
+        ]
+      }
+    },
+    "ch4_rate_profiles": {
+      "x_label": "x [cm]",
+      "y_label": "Rates of CH4 Production [mol/s-cm^3]",
+      "top_axis_map": {
+        "ticks": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          5.5
+        ],
+        "labels": [
+          "939",
+          "1033",
+          "1139",
+          "1261",
+          "1350"
+        ]
+      }
+    },
+    "flame_coordinate_vs_flow": {
+      "x_label": "V0",
+      "y_label": "x_FS",
+      "panels": {
+        "main": {
+          "x_lim": [
+            0.0,
+            1.2
+          ],
+          "y_lim": [
+            0.0,
+            15.0
+          ],
+          "series_ids": [
+            "burner_stabilized",
+            "le_1_4",
+            "le_1_2",
+            "le_0_8_stable",
+            "le_0_8_unstable"
+          ]
+        }
+      }
+    },
+    "ells_profile_comparison": {
+      "x_label": "x, mm",
+      "y_label": "Q0,0 / Q0,0,ref",
+      "panels": {
+        "left": {
+          "title": "HAB = 25 mm",
+          "x_lim": [
+            -10,
+            14
+          ],
+          "y_lim": [
+            0.05,
+            0.1
+          ]
+        },
+        "right": {
+          "title": "HAB = 50 mm",
+          "x_lim": [
+            -10,
+            14
+          ],
+          "y_lim": [
+            0.05,
+            0.1
+          ]
+        }
+      }
+    },
+    "engine_n_emissions": {
+      "x_label": "lambda [-]",
+      "y_label": "emissions",
+      "panels": {
+        "left": {
+          "title": "NH3 / NOx",
+          "x_lim": [
+            0.8,
+            1.8
+          ],
+          "y_lim": [
+            0,
+            12000
+          ]
+        },
+        "right": {
+          "title": "N2O",
+          "x_lim": [
+            0.8,
+            1.8
+          ],
+          "y_lim": [
+            0,
+            60
+          ]
+        }
+      }
+    },
+    "extinction_limits": {
+      "x_label": "x",
+      "y_label": "y",
+      "panels": {
+        "left": {
+          "title": "a_E vs fuel fraction",
+          "x_lim": [
+            0,
+            1.0
+          ],
+          "y_lim": [
+            0,
+            300
+          ]
+        },
+        "right": {
+          "title": "a_E vs TWE",
+          "x_lim": [
+            0,
+            3.0
+          ],
+          "y_lim": [
+            0,
+            3.5
+          ]
+        }
+      }
+    },
+    "ignition_delay_comparison": {
+      "x_label": "1000/T [K^-1]",
+      "y_label": "Ignition Delay Time [us]",
+      "panels": {
+        "main": {
+          "x_lim": [
+            0.7,
+            0.85
+          ],
+          "y_lim": [
+            60,
+            1500
+          ]
+        }
+      }
+    },
+    "polymer_mass_loss": {
+      "x_label": "Temperature (°C)",
+      "y_label": "Weight %",
+      "panels": {
+        "main": {
+          "x_lim": [
+            200,
+            500
+          ],
+          "y_lim": [
+            0,
+            105
+          ]
+        }
+      }
+    },
+    "rcci_efficiency": {
+      "x_label": "Premixed Energy Ratio",
+      "y_label": "efficiency",
+      "panels": {
+        "top": {
+          "title": "Combustion Efficiency",
+          "x_lim": [
+            0,
+            0.8
+          ],
+          "y_lim": [
+            60,
+            100
+          ]
+        },
+        "bottom": {
+          "title": "Gross ITE",
+          "x_lim": [
+            0,
+            0.8
+          ],
+          "y_lim": [
+            30,
+            55
+          ]
+        }
+      }
+    }
+  }
+}

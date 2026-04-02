@@ -1,0 +1,18 @@
+{
+  "sample_id": "sample_0015",
+  "chart_type": "heatmap",
+  "reference_image": null,
+  "reference_note": "Common chart coverage sample without external paper reference.",
+  "data_sources": [
+    "data/shared/matrix_values_v1.csv"
+  ],
+  "script": "samples/heatmap/sample_0015/plot.py",
+  "readme": "samples/heatmap/sample_0015/README.md",
+  "output": "samples/heatmap/sample_0015/output.png",
+  "selection": {
+    "figure_group": "method_correlation_heatmap"
+  },
+  "notes": [
+    "Coverage sample added to improve chart-type diversity in the dataset."
+  ]
+}

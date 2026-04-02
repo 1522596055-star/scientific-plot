@@ -1,0 +1,16 @@
+{
+  "dataset_id": "scatter_points_v1",
+  "row_count": 180,
+  "description": "Shared 2D scatter dataset for cluster and bubble chart samples.",
+  "figure_groups": {
+    "cluster_embedding": {
+      "series_ids": [
+        "Cluster 1",
+        "Cluster 2",
+        "Cluster 3",
+        "Cluster 4"
+      ],
+      "chart_hint": "scatter_bubble"
+    }
+  }
+}

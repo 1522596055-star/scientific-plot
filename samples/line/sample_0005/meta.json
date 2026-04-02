@@ -1,0 +1,29 @@
+{
+  "sample_id": "sample_0005",
+  "chart_type": "single_panel_multi_line_with_inset",
+  "reference_image": "ref/image_selected/sample_0005_ch4_production_rate_profiles.jpg",
+  "data_sources": [
+    "data/shared/profile_series_v1.csv"
+  ],
+  "script": "samples/line/sample_0005/plot.py",
+  "readme": "samples/line/sample_0005/README.md",
+  "output": "samples/line/sample_0005/output.png",
+  "selection": {
+    "figure_group": "ch4_rate_profiles",
+    "condition_ids": [
+      "base",
+      "no_1pct",
+      "no_10_4pct"
+    ],
+    "reaction_ids": [
+      "r34",
+      "r31",
+      "r32",
+      "r33"
+    ]
+  },
+  "notes": [
+    "This sample now reads from the compressed shared profile dataset.",
+    "Color encodes reaction identity and linestyle encodes condition."
+  ]
+}

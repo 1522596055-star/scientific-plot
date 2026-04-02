@@ -1,0 +1,29 @@
+{
+  "dataset_id": "distribution_measurements_v1",
+  "row_count": 820,
+  "description": "Compressed shared distribution dataset for boxplot, violin, and histogram samples.",
+  "figure_groups": {
+    "model_score_distribution": {
+      "chart_hint": "boxplot",
+      "categories": [
+        "Baseline",
+        "Regularized",
+        "Ensemble",
+        "Ours"
+      ]
+    },
+    "cell_response_distribution": {
+      "chart_hint": "violin",
+      "categories": [
+        "Control",
+        "Treatment A",
+        "Treatment B",
+        "Treatment C"
+      ]
+    },
+    "particle_size_histogram": {
+      "chart_hint": "histogram",
+      "bins_recommended": 18
+    }
+  }
+}

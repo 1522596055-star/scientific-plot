@@ -1,0 +1,34 @@
+{
+  "sample_id": "sample_0001",
+  "chart_type": "grouped_bar",
+  "reference_image": "ref/image_selected/sample_0001_grouped_bar_combustion_species.jpg",
+  "reference_note": "ScienceDirect reference image used only for structural guidance.",
+  "data_sources": [
+    "data/shared/categorical_measurements_v1.csv"
+  ],
+  "script": "samples/bar/sample_0001/plot.py",
+  "readme": "samples/bar/sample_0001/README.md",
+  "output": "samples/bar/sample_0001/output.png",
+  "selection": {
+    "figure_group": "combustion_intermediates",
+    "condition_ids": [
+      "0.8",
+      "1.4"
+    ],
+    "category_order": [
+      "NO",
+      "HNO",
+      "OH",
+      "O",
+      "H",
+      "O2",
+      "NH2",
+      "NH",
+      "N"
+    ]
+  },
+  "notes": [
+    "The categorical data structure was compressed to one row per condition-category pair.",
+    "The rendered plot intentionally simplifies legend and text annotations to keep the sample easy to reproduce."
+  ]
+}

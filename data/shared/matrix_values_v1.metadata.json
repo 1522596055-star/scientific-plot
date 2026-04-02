@@ -1,0 +1,30 @@
+{
+  "dataset_id": "matrix_values_v1",
+  "row_count": 64,
+  "description": "Shared matrix dataset for common heatmap samples.",
+  "figure_groups": {
+    "method_correlation_heatmap": {
+      "rows": [
+        "Method A",
+        "Method B",
+        "Method C",
+        "Method D",
+        "Method E",
+        "Method F",
+        "Method G",
+        "Method H"
+      ],
+      "cols": [
+        "Method A",
+        "Method B",
+        "Method C",
+        "Method D",
+        "Method E",
+        "Method F",
+        "Method G",
+        "Method H"
+      ],
+      "chart_hint": "heatmap"
+    }
+  }
+}

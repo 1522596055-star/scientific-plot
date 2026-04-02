@@ -1,0 +1,29 @@
+{
+  "root": "test-data",
+  "datasets": [
+    {
+      "file": "catalyst_activity_summary.csv",
+      "expected_chart": "grouped_bar"
+    },
+    {
+      "file": "engine_dual_metric_scan.csv",
+      "expected_chart": "multi_panel_line"
+    },
+    {
+      "file": "method_similarity_matrix.tsv",
+      "expected_chart": "heatmap"
+    },
+    {
+      "file": "treatment_conversion_repeats.csv",
+      "expected_chart": "boxplot"
+    },
+    {
+      "file": "ignition_delay_scan.csv",
+      "expected_chart": "log_scatter_or_line"
+    },
+    {
+      "file": "cluster_embedding_points.csv",
+      "expected_chart": "bubble_scatter"
+    }
+  ]
+}

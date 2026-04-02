@@ -1,0 +1,26 @@
+{
+  "sample_id": "sample_0006",
+  "chart_type": "multi_line_parameter_curve",
+  "reference_image": "ref/pdf_selected/sample_0006_flame_coordinate_vs_flow.jpg",
+  "source_pdf": "pdf/premixed_flames_dominant_diffusion_source_mixture.pdf",
+  "data_sources": [
+    "data/shared/profile_series_v1.csv"
+  ],
+  "script": "samples/line/sample_0006/plot.py",
+  "readme": "samples/line/sample_0006/README.md",
+  "output": "samples/line/sample_0006/output.png",
+  "selection": {
+    "figure_group": "flame_coordinate_vs_flow",
+    "series_ids": [
+      "burner_stabilized",
+      "le_1_4",
+      "le_1_2",
+      "le_0_8_stable",
+      "le_0_8_unstable"
+    ]
+  },
+  "notes": [
+    "This is the single selected figure from the source PDF because it has the highest reuse value among the paper's plots.",
+    "The unstable branch is kept as a separate red dotted series for clarity."
+  ]
+}

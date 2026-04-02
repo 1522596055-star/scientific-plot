@@ -1,0 +1,19 @@
+equivalence_ratio,fuel,efficiency,nox_ppm
+0.55,Diesel,38.0,820
+0.65,Diesel,40.8,710
+0.75,Diesel,42.5,620
+0.85,Diesel,43.1,550
+0.95,Diesel,42.2,510
+1.05,Diesel,40.4,495
+0.55,Ammonia blend,34.2,640
+0.65,Ammonia blend,36.9,560
+0.75,Ammonia blend,39.5,470
+0.85,Ammonia blend,41.2,410
+0.95,Ammonia blend,40.7,380
+1.05,Ammonia blend,39.1,365
+0.55,Methanol blend,35.6,590
+0.65,Methanol blend,38.4,510
+0.75,Methanol blend,40.7,430
+0.85,Methanol blend,42.0,375
+0.95,Methanol blend,41.5,350
+1.05,Methanol blend,39.8,340
