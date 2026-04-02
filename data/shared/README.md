@@ -9,7 +9,7 @@ Each dataset should have:
 ## Current shared datasets
 
 - `categorical_measurements_v1.*` — grouped categorical values and sensitivity-bar style data
-- `profile_series_v1.*` — line, scatter, multi-panel, inset, and parameter-scan style profiles
+- `profile_series_v1.*` — line, scatter, multi-panel, inset, parameter-scan, reduced-order model-comparison, and validation-style profile figures
 - `distribution_measurements_v1.*` — boxplot, violin, and histogram source values
 - `matrix_values_v1.*` — heatmap-ready matrix data
 - `scatter_points_v1.*` — clustered 2D scatter / bubble data

@@ -14,5 +14,10 @@
   },
   "notes": [
     "Selected as the most reusable figure from its source PDF."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "stacked-shared-x-metrics",
+    "why": "Best default starter for two vertically stacked metrics that share one x-axis."
+  }
 }

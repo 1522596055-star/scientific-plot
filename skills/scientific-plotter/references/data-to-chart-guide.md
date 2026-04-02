@@ -104,3 +104,8 @@ Ask one concise question only if:
 Do **not** ask the user to choose between line vs scatter, bar vs boxplot, or one-panel vs two-panel if the data profile makes one option clearly more scientific.
 
 Choose a strong default and move forward.
+
+## After choosing the family
+
+Before opening many raw references, read the distilled pattern notes under `../../patterns/` when they exist.
+This is especially important for crowded families like `line` and `multi_panel`, where the repository intentionally keeps only a few canonical starters plus a handful of variants.

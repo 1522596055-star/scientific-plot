@@ -8,18 +8,41 @@ This directory is intentionally grouped by **visual form** rather than by paper 
 
 A practical search strategy is:
 1. choose the chart family that matches the target figure structure
-2. open that category README
-3. start from the recommended starter sample
-4. adapt the closest sample-level README and script
+2. if a matching note exists under `../patterns/`, read it first
+3. if the task is simulation-heavy, also read `../patterns/numerical_simulation.md`
+4. open the category README
+5. start from the category's **canonical starter template**
+6. only open variant samples if a specific feature is required
+7. adapt the closest sample-level README and script
+
+## Canonical starters vs variants
+
+Not every sample should be treated equally.
+
+- **canonical starters** are the main reusable templates an agent should try first
+- **variants** are useful, but should only be opened when their distinguishing feature is actually needed
+
+This distinction matters most in crowded families such as `line/` and `multi_panel/`.
 
 ## Category overview
 
 - `bar/` — grouped bars and horizontal bar-style sensitivity charts
-- `line/` — single-panel line charts, inset curves, and continuous parameter scans
-- `multi_panel/` — figures with multiple aligned subplots
+- `line/` — curated single-panel line starters plus a few dense variants
+- `multi_panel/` — curated multi-panel starters plus a few structural variants
 - `scatter/` — sparse point plots, scatter charts, log-scatter charts, bubble scatter
 - `distribution/` — boxplots, violin plots, histograms
 - `heatmap/` — matrix-valued heatmaps
+
+## Pattern notes
+
+Use these distilled notes before diving into too many raw references:
+- `../patterns/line.md`
+- `../patterns/multi_panel.md`
+- `../patterns/composite.md` when chart+image/schematic/field-map structure is involved
+- `../patterns/numerical_simulation.md` when simulation-heavy judgment matters
+
+For a repository-wide map of current simulation-heavy papers, see:
+- `../pdf/SIMULATION_CURATION.md`
 
 ## When to search each category first
 

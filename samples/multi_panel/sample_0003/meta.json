@@ -1,7 +1,8 @@
 {
   "sample_id": "sample_0003",
-  "chart_type": "multi_panel_line_with_errorbar",
-  "reference_image": "ref/image_selected/sample_0003_temperature_species_profiles.jpg",
+  "chart_type": "multi_panel_line_with_reference_points",
+  "reference_image": "ref/pdf_selected/sample_0003_flamelet_validation_grid.jpg",
+  "source_pdf": "pdf/four_fuel_stream_flamelet_pulverized_coal_ammonia_combustion.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],
@@ -9,7 +10,7 @@
   "readme": "samples/multi_panel/sample_0003/README.md",
   "output": "samples/multi_panel/sample_0003/output.png",
   "selection": {
-    "figure_group": "temperature_species_profiles",
+    "figure_group": "flamelet_validation_profiles",
     "panels": [
       "a",
       "b",
@@ -20,7 +21,12 @@
     ]
   },
   "notes": [
-    "This sample now reads from the compressed shared profile dataset.",
-    "The rendered plot preserves the six-panel layout while keeping legend and annotations minimal."
-  ]
+    "This sample was refreshed from a newer coal/ammonia flamelet paper because it is closer to simulation-heavy group workflows than the previous reference.",
+    "The rendered plot keeps the six-panel validation-grid structure but simplifies twin-axis details into one quantity per panel for reuse."
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "dense-small-multiple-grid",
+    "why": "Primary starter for grid-based simulation-versus-reference profile figures with repeated line-plus-marker grammar."
+  }
 }

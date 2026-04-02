@@ -25,5 +25,10 @@
   "notes": [
     "This sample now reads from the compressed shared profile dataset.",
     "Color encodes reaction identity and linestyle encodes condition."
-  ]
+  ],
+  "curation": {
+    "role": "variant",
+    "pattern_family": "dense-dual-encoded-line",
+    "why": "Useful when color and linestyle must encode separate variables, but too dense to be the default starter."
+  }
 }

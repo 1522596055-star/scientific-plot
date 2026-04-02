@@ -2,9 +2,10 @@
 
 A reusable scientific plotting dataset and agent skill.
 
-This repository now serves **two purposes**:
+This repository now serves **three linked purposes**:
 1. a reusable library of scientific plotting templates
-2. a bundled `scientific-plotter` skill that agents can use to turn raw scientific data or vague plotting requests into publication-style figures
+2. a bundled `scientific-plotter` skill that turns raw scientific data or vague plotting requests into publication-style figures
+3. a distilled knowledge layer that captures strong paper-figure ideas without forcing every idea into a new script template
 
 Each sample is a reproducible plotting unit with:
 - a reference image or selected PDF figure when available
@@ -13,11 +14,13 @@ Each sample is a reproducible plotting unit with:
 - a sample README for humans and agents
 - metadata describing the data source and chart type
 
-The repository is organized to help an agent quickly answer four questions:
+The repository is organized to help an agent quickly answer six questions:
 1. **What chart families already exist?**
 2. **What shared datasets should be reused first?**
-3. **Where did a sample come from: image, PDF, or internal coverage expansion?**
-4. **How can this repository be used directly as an agent skill on any machine?**
+3. **Which templates are canonical starters vs narrow variants?**
+4. **What good paper-figure ideas should be reused even when they do not deserve a full new sample?**
+5. **How should simulation-heavy papers influence curation without creating too many extra samples?**
+6. **How can this repository be used directly as an agent skill on any machine?**
 
 ## Repository layout
 
@@ -33,11 +36,20 @@ scientific-plot/
       *.metadata.json
   pdf/
     README.md
+    CURATED_INSIGHTS.md
+    SIMULATION_CURATION.md
     *.pdf
+    inbox/
   ref/
     README.md
     image_selected/
     pdf_selected/
+  patterns/
+    README.md
+    line.md
+    multi_panel.md
+    composite.md
+    numerical_simulation.md
   samples/
     README.md
     bar/
@@ -69,9 +81,13 @@ Each dataset has:
 - one `.metadata.json`
 
 ### `pdf/`
-Archived source papers with normalized filenames.
+Archived source papers plus an inbox for untriaged downloads.
 
-These are preserved as sources for figure selection. We usually choose **at most one figure per PDF**, and only when the figure has good reuse value.
+- normalized, curated PDFs stay directly under `pdf/`
+- `pdf/CURATED_INSIGHTS.md` captures soft takeaways from the already curated archive
+- `pdf/SIMULATION_CURATION.md` is the full-review map for simulation-heavy papers
+- new downloads should move to `pdf/inbox/` immediately so the repository root stays clean
+- not every new PDF should become a sample
 
 ### `ref/`
 Reference figures already selected for the dataset.
@@ -79,6 +95,18 @@ Reference figures already selected for the dataset.
 Subfolders:
 - `ref/image_selected/` — references that came from standalone images
 - `ref/pdf_selected/` — references cropped or selected from archived PDFs
+
+### `patterns/`
+Distilled plotting judgment.
+
+This is the key layer for ideas that are worth keeping but do **not** justify another `plot.py` template.
+Use it to preserve published-paper wisdom without overwhelming agents with too many similar references.
+
+Current notes include:
+- `line.md`
+- `multi_panel.md`
+- `composite.md`
+- `numerical_simulation.md`
 
 ### `samples/`
 Finished plotting samples grouped by chart family.
@@ -89,12 +117,16 @@ Each sample directory contains:
 - `meta.json`
 - `README.md`
 
+The busiest categories should stay intentionally small and curated.
+For now, `line/` and `multi_panel/` are explicitly split into canonical starters and narrower variants.
+
 ### `skills/scientific-plotter/`
 A bundled Agent Skills-compatible skill.
 
 This skill can:
 - read raw CSV/TSV/XLSX data
 - infer a likely chart family when the user does not know what chart to use
+- read distilled pattern notes to avoid overreacting to raw references
 - search the local sample library for the closest structural template
 - generate a standalone `plot.py`
 - render the final `output.png`
@@ -102,13 +134,27 @@ This skill can:
 ### `test-data/`
 Synthetic datasets for smoke testing the skill on any machine.
 
+## Retrieval philosophy
+
+The repository is intentionally layered.
+An agent should usually work in this order:
+1. understand the data and task
+2. read `patterns/` for the relevant family if available
+3. if the task is simulation-heavy, also read `patterns/numerical_simulation.md`
+4. if the task involves sample refresh or PDF curation, read `pdf/SIMULATION_CURATION.md`
+5. choose a **canonical** starter sample
+6. only then open variant samples
+7. only consult raw references or PDFs if the distilled layers are still insufficient
+
+This keeps the agent from being buried in too many reference images while still preserving paper-quality design judgment.
+
 ## Sample categories
 
 - `samples/bar/` — grouped bars and horizontal sensitivity bars
-- `samples/line/` — single-panel lines, inset curves, parameter scans
-- `samples/multi_panel/` — 2-panel, 3-panel, or grid-based figures
+- `samples/line/` — curated single-panel lines, inset curves, parameter scans
+- `samples/multi_panel/` — curated 2-panel, 3-panel, or grid-based figures
 - `samples/scatter/` — scatter, sparse scientific point plots, log-scatter, bubble scatter
-- `samples/distribution/` — boxplot, violin, histogram
+- `samples/distribution/` — boxplot, violin plots, histograms
 - `samples/heatmap/` — matrix heatmaps
 
 ## Use this repository as an agent skill
@@ -119,7 +165,7 @@ This repository follows the Agent Skills layout by placing the skill in:
 skills/scientific-plotter/
 ```
 
-Because the skill uses **repository-relative paths**, it is portable across machines after cloning.
+Because the skill uses repository-relative paths, it is portable across machines after cloning.
 
 ### Pi installation
 
@@ -162,16 +208,20 @@ Ready-made test files are in `test-data/`:
 ## Workflow conventions
 
 ### When a new image is added
-1. Move it into `ref/image_selected/` with a normalized filename.
-2. Reuse an existing shared dataset if possible.
-3. Create or update one sample.
+1. move it into `ref/image_selected/` with a normalized filename
+2. reuse an existing shared dataset if possible
+3. either create/update one sample or distill the idea into `patterns/`
 
 ### When a new PDF is added
-1. Move it into `pdf/` with a normalized filename.
-2. Inspect figures in the paper.
-3. Choose **one** figure with the highest reuse value.
-4. Save the chosen figure into `ref/pdf_selected/`.
-5. Reuse existing shared datasets when possible.
+1. move it into `pdf/inbox/` immediately so the repository root stays clean
+2. inspect the paper
+3. decide whether it should become:
+   - a canonical sample
+   - a secondary variant sample
+   - a distilled note in `patterns/`
+   - or an archive-only PDF with no promotion
+4. if the paper is simulation-heavy, also update the simulation curation docs before deciding on a promotion
+5. if promoted, normalize filenames and update the relevant README mappings
 
 ### When adding new data
 Prefer this order:
@@ -195,7 +245,11 @@ python3 samples/bar/sample_0001/plot.py
 
 ## Notes for future agents
 - Prefer reuse over proliferation.
-- Keep reference handling simple and traceable.
+- Prefer `patterns/` over raw references when the family already has distilled guidance.
+- Give newer simulation-relevant papers extra weight when they overlap with older samples.
+- Use `pdf/SIMULATION_CURATION.md` when simulation-heavy papers start to dominate the curation question.
+- Treat `pdf/inbox/` as a triage queue, not as a sample backlog.
+- Keep canonical samples few and high-value.
 - Keep sample READMEs operational: what it does, what data it uses, how to run it.
 - Do not add many near-duplicate figures from the same paper.
 - Prefer structure matching over domain-word matching when choosing a plotting template.

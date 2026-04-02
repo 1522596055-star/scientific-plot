@@ -1,22 +1,23 @@
 # sample_0003
 
 ## Reuse this sample when
-- when you need a grid of small multiples for different species or targets
-- when each panel contains one smooth line and one error-bar point series
-- when panel-specific axis limits differ slightly but the overall layout is shared
+- when you need a dense grid of simulation-versus-reference profile comparisons
+- when each panel shows one quantity over the same spatial coordinate
+- when the same line-plus-marker grammar repeats across all panels
 
 ## What pattern this script implements
-This sample is a reusable template for a **2x3 multi-panel experiment-vs-simulation figure**.
+This sample is a reusable template for a **2x3 multi-panel validation grid with model lines and reference markers**.
 
 ## Data shape expected by this script
 - one `line` series and one `point` series per panel
-- optional `error_low` and `error_high` for experimental observations
-- panel-specific x/y limits defined in script or metadata
+- shared x-axis meaning across all panels
+- panel-specific y-ranges for each thermo-chemical quantity
 
 ## How to adapt it
-- replace the panel titles and limits in `plot.py`
+- replace the panel titles, labels, and limits in `plot.py`
 - reuse `profile_series_v1.csv` with panel-specific `line` and `point` rows
-- adjust error-bar styling if your target figure uses different markers
+- keep the repeated visual grammar stable across panels
+- use background zone shading only when it carries real physical meaning
 
 ## Files
 - `plot.py` — the plotting template to copy or adapt
@@ -28,7 +29,7 @@ This sample is a reusable template for a **2x3 multi-panel experiment-vs-simulat
 - `data/shared/profile_series_v1.csv`
 
 ## Figure group used here
-- `temperature_species_profiles`
+- `flamelet_validation_profiles`
 
 ## Run this sample
 From the repository root:
@@ -44,8 +45,9 @@ samples/multi_panel/sample_0003/output.png
 ```
 
 ## Do not use this sample when
-- when no error bars are needed
-- when there is only one target variable and a single-panel figure is enough
+- when no repeated panel structure is needed
+- when one single quantity on one axis is enough
+- when uncertainty bars are the central visual feature and should dominate the comparison
 
 ## Closest sibling samples
 - `sample_0002`

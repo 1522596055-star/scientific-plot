@@ -1,7 +1,8 @@
 {
   "sample_id": "sample_0002",
-  "chart_type": "multi_panel_line",
-  "reference_image": "ref/image_selected/sample_0002_multipanel_no_profiles.jpg",
+  "chart_type": "multi_panel_line_and_point_validation",
+  "reference_image": "ref/pdf_selected/sample_0002_mixture_fraction_temperature_profiles.jpg",
+  "source_pdf": "pdf/large_eddy_simulation_partially_cracked_ammonia_flames.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],
@@ -9,7 +10,7 @@
   "readme": "samples/multi_panel/sample_0002/README.md",
   "output": "samples/multi_panel/sample_0002/output.png",
   "selection": {
-    "figure_group": "combustion_no_profiles",
+    "figure_group": "mixture_fraction_temperature_profiles",
     "panels": [
       "a",
       "b",
@@ -17,7 +18,12 @@
     ]
   },
   "notes": [
-    "This sample now reads from the compressed shared profile dataset.",
-    "The rendered plot keeps the multi-panel structure but simplifies legend detail for easier reuse."
-  ]
+    "This sample was refreshed from a newer LES ammonia-flame paper because the repeated validation-panel structure is closer to the group's simulation workflow than the previous source.",
+    "The rendered version keeps only the compact temperature-profile row so the sample stays a lighter 1x3 starter rather than becoming another dense grid."
+  ],
+  "curation": {
+    "role": "variant",
+    "pattern_family": "compact-repeated-validation-panels",
+    "why": "Useful when a figure needs a compact 1x3 rhythm of repeated validation panels without promoting a full dense-grid layout."
+  }
 }

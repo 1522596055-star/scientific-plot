@@ -284,7 +284,7 @@ def build_recommendations(columns: list[str], rows: list[dict[str, Any]], profil
                     "single_panel",
                     0.82,
                     "A continuous or ordered x-axis is present, so a line chart is usually the clearest default for scientific trends.",
-                    "scientific line chart with multiple series over a continuous x-axis",
+                    "plain single-panel multi-line scientific trend over a continuous x-axis",
                     {"x": chosen_x, "y": measure_columns[0], "group": group_candidates[0] if group_candidates else None},
                 )
             )

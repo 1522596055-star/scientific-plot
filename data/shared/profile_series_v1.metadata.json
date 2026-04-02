@@ -1,7 +1,7 @@
 {
   "dataset_id": "profile_series_v1",
-  "description": "Compressed shared profile dataset for line, point, error-bar, and inset combustion figures.",
-  "row_count": 1218,
+  "description": "Compressed shared profile dataset for line, marker, error-bar, inset, and validation-style scientific figures.",
+  "row_count": 1507,
   "columns": {
     "dataset_id": "Shared dataset identifier.",
     "figure_group": "High-level figure family.",
@@ -18,156 +18,6 @@
   },
   "compression_note": "Style and axis configuration were moved out of row-level storage to reduce repetition.",
   "figure_groups": {
-    "combustion_no_profiles": {
-      "x_label": "Height above burner (mm)",
-      "y_label": "NO mole fraction (ppm)",
-      "panels": {
-        "a": {
-          "title": "(a) mechanism comparison",
-          "condition_tag": "CH4/NH3/O2/N2, phi=0.9",
-          "x_lim": [
-            -0.2,
-            20.0
-          ],
-          "y_lim": [
-            0.0,
-            5500.0
-          ]
-        },
-        "b": {
-          "title": "(b) O2/N2 = 0.21 / 0.79",
-          "condition_tag": "phi=0.9",
-          "x_lim": [
-            -0.2,
-            16.0
-          ],
-          "y_lim": [
-            0.0,
-            5000.0
-          ]
-        },
-        "c": {
-          "title": "(c) O2/N2 = 0.35 / 0.65",
-          "condition_tag": "phi=0.9",
-          "x_lim": [
-            -0.2,
-            16.0
-          ],
-          "y_lim": [
-            0.0,
-            7000.0
-          ]
-        }
-      }
-    },
-    "temperature_species_profiles": {
-      "x_label": "Temperature (K)",
-      "y_label": "Mole fraction (10^-3)",
-      "panels": {
-        "a": {
-          "species": "C2H4",
-          "x_lim": [
-            725,
-            1075
-          ],
-          "y_lim": [
-            -0.25,
-            1.75
-          ],
-          "y_ticks": [
-            0.0,
-            0.5,
-            1.0,
-            1.5
-          ]
-        },
-        "b": {
-          "species": "CH2O",
-          "x_lim": [
-            725,
-            1075
-          ],
-          "y_lim": [
-            -0.25,
-            1.75
-          ],
-          "y_ticks": [
-            0.0,
-            0.5,
-            1.0,
-            1.5
-          ]
-        },
-        "c": {
-          "species": "CH3OH",
-          "x_lim": [
-            725,
-            1075
-          ],
-          "y_lim": [
-            -0.1,
-            0.39
-          ],
-          "y_ticks": [
-            0.0,
-            0.12,
-            0.24,
-            0.36
-          ]
-        },
-        "d": {
-          "species": "CH3CHO",
-          "x_lim": [
-            725,
-            1075
-          ],
-          "y_lim": [
-            -0.02,
-            0.13
-          ],
-          "y_ticks": [
-            0.0,
-            0.04,
-            0.08,
-            0.12
-          ]
-        },
-        "e": {
-          "species": "CH4",
-          "x_lim": [
-            725,
-            1075
-          ],
-          "y_lim": [
-            -0.1,
-            0.52
-          ],
-          "y_ticks": [
-            0.0,
-            0.16,
-            0.32,
-            0.48
-          ]
-        },
-        "f": {
-          "species": "COC*C",
-          "x_lim": [
-            700,
-            1100
-          ],
-          "y_lim": [
-            -0.1,
-            0.52
-          ],
-          "y_ticks": [
-            0.0,
-            0.16,
-            0.32,
-            0.48
-          ]
-        }
-      }
-    },
     "heat_release_profiles": {
       "x_label": "x [cm]",
       "y_label": "Heat Release Rate [W/cm^3]",
@@ -227,34 +77,6 @@
             "le_1_2",
             "le_0_8_stable",
             "le_0_8_unstable"
-          ]
-        }
-      }
-    },
-    "ells_profile_comparison": {
-      "x_label": "x, mm",
-      "y_label": "Q0,0 / Q0,0,ref",
-      "panels": {
-        "left": {
-          "title": "HAB = 25 mm",
-          "x_lim": [
-            -10,
-            14
-          ],
-          "y_lim": [
-            0.05,
-            0.1
-          ]
-        },
-        "right": {
-          "title": "HAB = 50 mm",
-          "x_lim": [
-            -10,
-            14
-          ],
-          "y_lim": [
-            0.05,
-            0.1
           ]
         }
       }
@@ -331,22 +153,6 @@
         }
       }
     },
-    "polymer_mass_loss": {
-      "x_label": "Temperature (°C)",
-      "y_label": "Weight %",
-      "panels": {
-        "main": {
-          "x_lim": [
-            200,
-            500
-          ],
-          "y_lim": [
-            0,
-            105
-          ]
-        }
-      }
-    },
     "rcci_efficiency": {
       "x_label": "Premixed Energy Ratio",
       "y_label": "efficiency",
@@ -374,6 +180,173 @@
           ]
         }
       }
+    },
+    "flamelet_validation_profiles": {
+      "x_label": "y [mm]",
+      "y_label": "profile value",
+      "panels": {
+        "a": {
+          "title": "(a) Y_O2",
+          "x_lim": [
+            0,
+            20
+          ],
+          "y_lim": [
+            0.0,
+            0.24
+          ],
+          "y_label": "Y_O2 [-]"
+        },
+        "b": {
+          "title": "(b) Y_H2O",
+          "x_lim": [
+            0,
+            20
+          ],
+          "y_lim": [
+            0.0,
+            0.14
+          ],
+          "y_label": "Y_H2O [-]"
+        },
+        "c": {
+          "title": "(c) Temperature",
+          "x_lim": [
+            0,
+            20
+          ],
+          "y_lim": [
+            0,
+            2600
+          ],
+          "y_label": "T [K]"
+        },
+        "d": {
+          "title": "(d) Y_CO",
+          "x_lim": [
+            0,
+            20
+          ],
+          "y_lim": [
+            0.0,
+            0.14
+          ],
+          "y_label": "Y_CO [-]"
+        },
+        "e": {
+          "title": "(e) Y_HCN",
+          "x_lim": [
+            0,
+            20
+          ],
+          "y_lim": [
+            0.0,
+            0.03
+          ],
+          "y_label": "Y_HCN [-]"
+        },
+        "f": {
+          "title": "(f) Y_NO",
+          "x_lim": [
+            0,
+            20
+          ],
+          "y_lim": [
+            0.0,
+            0.006
+          ],
+          "y_label": "Y_NO [-]"
+        }
+      },
+      "reference_note": "Inspired by dense simulation-vs-reference thermo-chemical profile comparisons from a coal/ammonia flamelet paper. Background zone shading can be used optionally when a shared reaction region is meaningful."
+    },
+    "reduced_order_temperature_solutions": {
+      "x_label": "time [s]",
+      "y_label": "T [K]",
+      "panels": {
+        "main": {
+          "x_lim": [
+            0.0,
+            0.01
+          ],
+          "y_lim": [
+            1400,
+            2750
+          ]
+        }
+      },
+      "reference_note": "Inspired by reduced-order reacting-flow simulations comparing detailed chemistry against multiple local/global PC transport variants. Secondary timestep curves from the paper can be dropped when a clean plain multi-line starter is more reusable."
+    },
+    "mixture_fraction_temperature_profiles": {
+      "x_label": "ξ [-]",
+      "y_label": "T [K]",
+      "panels": {
+        "a": {
+          "title": "Z/D = 1",
+          "x_lim": [
+            0.0,
+            1.0
+          ],
+          "y_lim": [
+            0,
+            2300
+          ]
+        },
+        "b": {
+          "title": "Z/D = 4",
+          "x_lim": [
+            0.0,
+            1.0
+          ],
+          "y_lim": [
+            0,
+            2300
+          ]
+        },
+        "c": {
+          "title": "Z/D = 10",
+          "x_lim": [
+            0.0,
+            1.0
+          ],
+          "y_lim": [
+            0,
+            2300
+          ]
+        }
+      },
+      "reference_note": "Compact repeated validation panels adapted from LES versus experiment conditional-temperature comparisons in partially cracked ammonia flames."
+    },
+    "porous_media_validation_pair": {
+      "x_label": "x [m]",
+      "y_label": "profile value",
+      "panels": {
+        "left": {
+          "title": "(a) Temperature",
+          "x_lim": [
+            0.015,
+            0.027
+          ],
+          "y_lim": [
+            200,
+            1700
+          ],
+          "y_label": "T [K]"
+        },
+        "right": {
+          "title": "(b) Interstitial velocity",
+          "x_lim": [
+            0.017,
+            0.031
+          ],
+          "y_lim": [
+            0.5,
+            6.2
+          ],
+          "y_label": "u_i [m s^-1]"
+        }
+      },
+      "reference_note": "Two-panel validation pair inspired by porous-media burner comparisons between a volume-averaged simulation and a trusted reference calculation."
     }
   }
 }

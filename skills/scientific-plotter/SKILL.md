@@ -126,7 +126,21 @@ Good defaults:
 
 Ask a clarifying question only if the wrong chart choice would materially change the meaning of the figure.
 
-### 4) Convert the chart plan into a structural search query
+### 4) Read distilled family guidance before opening many samples
+
+Start with:
+- `../../patterns/README.md`
+
+If the likely family is one of the crowded ones, also read:
+- `../../patterns/line.md`
+- `../../patterns/multi_panel.md`
+- `../../patterns/composite.md` when the target mixes charts with images, schematics, or field maps
+- `../../patterns/numerical_simulation.md` when the task sounds like LES/DNS/flamelet/reduced-order or simulation-vs-reference plotting
+
+Use these notes to avoid opening too many near-duplicate samples.
+Prefer a **canonical starter** before browsing narrower variants.
+
+### 5) Convert the chart plan into a structural search query
 
 Write a short English summary that describes the **structure**, not the domain.
 
@@ -137,7 +151,7 @@ Examples:
 - `log-scale scatter plot comparing several groups`
 - `boxplot comparing raw-value distributions across categories`
 
-### 5) Search the template library
+### 6) Search the template library
 
 Run:
 
@@ -159,7 +173,10 @@ If several samples look plausible, read:
 - `references/selection-rubric.md`
 - `references/data-to-chart-guide.md`
 
-### 6) Choose inspiration templates
+For line and multi-panel families, prefer the candidate whose `meta.json` marks it as a **canonical** starter unless the user clearly needs a variant-specific feature.
+If the task is clearly simulation-oriented, give extra attention to the guidance in `../../patterns/numerical_simulation.md` and to any repository notes that identify refresh candidates from newer simulation papers.
+
+### 7) Choose inspiration templates
 
 Choose by **structure first**, not by subject matter.
 
@@ -176,7 +193,7 @@ Usually use:
 
 Do not collage many templates together.
 
-### 7) Build the final standalone script
+### 8) Build the final standalone script
 
 The generated `plot.py` should:
 - run without depending on this repository at runtime
@@ -196,7 +213,7 @@ If the user did **not** provide data:
 - use compact synthetic data only when the request is exploratory or clearly asks for a mockup/template
 - clearly mark synthetic data in comments and in the final response
 
-### 8) Render and fix
+### 9) Render and fix
 
 Run the generated script.
 
@@ -206,7 +223,7 @@ If it fails:
 
 Before finishing, verify that both `plot.py` and `output.png` exist.
 
-### 9) Return a concise build summary
+### 10) Return a concise build summary
 
 Report:
 - why this chart family was selected
@@ -247,5 +264,11 @@ If no sample is an exact match:
 Use these when needed:
 - `references/data-to-chart-guide.md`
 - `references/selection-rubric.md`
+- `../../patterns/README.md`
+- `../../patterns/line.md`
+- `../../patterns/multi_panel.md`
+- `../../patterns/composite.md`
+- `../../patterns/numerical_simulation.md`
 - `../../README.md`
 - `../../samples/README.md`
+- `../../samples/REFRESH_CANDIDATES.md`

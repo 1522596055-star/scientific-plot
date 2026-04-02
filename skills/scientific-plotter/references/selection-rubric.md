@@ -40,6 +40,11 @@ Use boxplots for quartiles, violins for shape, histograms for one-variable frequ
 Choose heatmap samples when data is fundamentally a matrix.
 Do not force independent observations into a heatmap.
 
+## Prefer canonical starters before variants
+
+In crowded families such as `line` and `multi_panel`, read the repository's pattern notes and category README first.
+Start from a sample whose `meta.json` marks it as `canonical` unless the distinguishing feature of a variant is explicitly needed.
+
 ## Combining templates
 
 Use one primary sample whenever possible.

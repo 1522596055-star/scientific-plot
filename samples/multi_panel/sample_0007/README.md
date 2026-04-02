@@ -1,22 +1,22 @@
 # sample_0007
 
 ## Reuse this sample when
-- when two operating conditions should be compared side by side
-- when each panel contains measured points with uncertainty and matching model lines
-- when the same legend applies to both panels
+- when two validation quantities should be compared side by side
+- when each panel contains reference markers plus one modeled line
+- when one shared legend should explain both panels
 
 ## What pattern this script implements
-This sample is a reusable template for a **two-panel measured-vs-modeled profile comparison**.
+This sample is a reusable template for a **two-panel validation pair**.
 
 ## Data shape expected by this script
-- two or more panels with the same x-axis meaning
-- point series that may include symmetric error bars
-- paired line series representing modeled or fitted trends
+- two panels with the same x-axis meaning
+- one point series and one line series in each panel
+- panel-specific y-labels and ranges
 
 ## How to adapt it
-- replace the panel IDs and titles in `plot.py`
-- reuse `profile_series_v1.csv` with point and line series for each panel
-- adjust shared y-range if your two panels differ more strongly
+- replace the panel titles, labels, and ranges in `plot.py`
+- reuse `profile_series_v1.csv` with one reference series and one modeled series per panel
+- keep the legend shared unless the panels truly need different line/marker meanings
 
 ## Files
 - `plot.py` — the plotting template to copy or adapt
@@ -28,7 +28,7 @@ This sample is a reusable template for a **two-panel measured-vs-modeled profile
 - `data/shared/profile_series_v1.csv`
 
 ## Figure group used here
-- `ells_profile_comparison`
+- `porous_media_validation_pair`
 
 ## Run this sample
 From the repository root:
@@ -44,8 +44,9 @@ samples/multi_panel/sample_0007/output.png
 ```
 
 ## Do not use this sample when
-- when panel count is one and a single axis is enough
-- when you do not need measured-vs-modeled pairing in each panel
+- when only one quantity matters and a single axis is enough
+- when you need more than two repeated panels
+- when the panel grammars differ too much to share one legend
 
 ## Closest sibling samples
 - `sample_0002`

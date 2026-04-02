@@ -85,6 +85,8 @@ class Sample:
     reuse_when: list[str]
     avoid_when: list[str]
     siblings: list[str]
+    curation_role: str | None
+    pattern_family: str | None
 
 
 def normalize_tokens(text: str) -> list[str]:
@@ -116,6 +118,7 @@ def load_samples() -> list[Sample]:
             continue
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
         readme_text = readme_path.read_text(encoding="utf-8")
+        curation = meta.get("curation", {})
         samples.append(
             Sample(
                 sample_id=meta["sample_id"],
@@ -129,6 +132,8 @@ def load_samples() -> list[Sample]:
                 reuse_when=extract_bullets(readme_text, "Reuse this sample when"),
                 avoid_when=extract_bullets(readme_text, "Do not use this sample when"),
                 siblings=[item.strip("`") for item in extract_bullets(readme_text, "Closest sibling samples") if item != "None yet in this category."],
+                curation_role=curation.get("role"),
+                pattern_family=curation.get("pattern_family"),
             )
         )
     return samples
@@ -177,8 +182,21 @@ def score_sample(query_text: str, sample: Sample) -> tuple[float, list[str]]:
     score += weighted_overlap(query_counter, sample.chart_type.replace("_", " "), 5.0)
     score += weighted_overlap(query_counter, " ".join(sample.reuse_when), 3.0)
     score += weighted_overlap(query_counter, sample.figure_group or "", 2.0)
+    score += weighted_overlap(query_counter, (sample.pattern_family or "").replace("-", " "), 2.0)
 
-    overlap_tokens = sorted({token for token in query_counter if token in Counter(normalize_tokens(' '.join(sample.reuse_when + [sample.chart_type, sample.category])))})
+    if sample.curation_role == "canonical":
+        score += 1.5
+        reasons.append("canonical starter bonus")
+
+    query_tokens = set(query_counter)
+    if sample.pattern_family == "parameter-scan-branch-curve" and not ({"parameter", "scan", "branch", "stable", "unstable"} & query_tokens):
+        score -= 2.5
+        reasons.append("parameter-scan specificity penalty")
+    if sample.pattern_family == "dense-dual-encoded-line" and not ({"color", "linestyle", "legend", "overlay"} & query_tokens):
+        score -= 2.0
+        reasons.append("dense-encoding specificity penalty")
+
+    overlap_tokens = sorted({token for token in query_counter if token in Counter(normalize_tokens(' '.join(sample.reuse_when + [sample.chart_type, sample.category, sample.pattern_family or ''])))})
     if overlap_tokens:
         reasons.append("matched tokens: " + ", ".join(overlap_tokens[:8]))
 
@@ -195,6 +213,10 @@ def sample_to_result(sample: Sample, score: float, reasons: list[str]) -> dict:
         "category": sample.category,
         "chart_type": sample.chart_type,
         "figure_group": sample.figure_group,
+        "curation": {
+            "role": sample.curation_role,
+            "pattern_family": sample.pattern_family,
+        },
         "data_sources": sample.data_sources,
         "paths": {
             "readme": sample.readme,

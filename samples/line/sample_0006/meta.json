@@ -22,5 +22,10 @@
   "notes": [
     "This is the single selected figure from the source PDF because it has the highest reuse value among the paper's plots.",
     "The unstable branch is kept as a separate red dotted series for clarity."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "parameter-scan-branch-curve",
+    "why": "Primary starter for continuously scanned control variables with branch-separated curves."
+  }
 }

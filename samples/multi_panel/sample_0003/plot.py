@@ -15,33 +15,25 @@ DATA_PATH = ROOT / "data" / "shared" / "profile_series_v1.csv"
 OUTPUT_PATH = Path(__file__).resolve().parent / "output.png"
 
 PANEL_ORDER = ["a", "b", "c", "d", "e", "f"]
-PANEL_TITLES = {
-    "a": r"(a) C$_2$H$_4$",
-    "b": r"(b) CH$_2$O",
-    "c": r"(c) CH$_3$OH",
-    "d": r"(d) CH$_3$CHO",
-    "e": r"(e) CH$_4$",
-    "f": r"(f) COC*C",
+PANEL_META = {
+    "a": {"title": r"(a) Y$_{\mathrm{O_2}}$", "y_label": r"Y$_{\mathrm{O_2}}$ [-]", "y_lim": (0.0, 0.24)},
+    "b": {"title": r"(b) Y$_{\mathrm{H_2O}}$", "y_label": r"Y$_{\mathrm{H_2O}}$ [-]", "y_lim": (0.0, 0.14)},
+    "c": {"title": r"(c) T", "y_label": "T [K]", "y_lim": (0.0, 2600.0)},
+    "d": {"title": r"(d) Y$_{\mathrm{CO}}$", "y_label": r"Y$_{\mathrm{CO}}$ [-]", "y_lim": (0.0, 0.14)},
+    "e": {"title": r"(e) Y$_{\mathrm{HCN}}$", "y_label": r"Y$_{\mathrm{HCN}}$ [-]", "y_lim": (0.0, 0.03)},
+    "f": {"title": r"(f) Y$_{\mathrm{NO}}$", "y_label": r"Y$_{\mathrm{NO}}$ [-]", "y_lim": (0.0, 0.006)},
 }
-PANEL_LIMITS = {
-    "a": {"x_lim": (725, 1075), "y_lim": (-0.25, 1.75), "y_ticks": [0.0, 0.5, 1.0, 1.5]},
-    "b": {"x_lim": (725, 1075), "y_lim": (-0.25, 1.75), "y_ticks": [0.0, 0.5, 1.0, 1.5]},
-    "c": {"x_lim": (725, 1075), "y_lim": (-0.10, 0.39), "y_ticks": [0.0, 0.12, 0.24, 0.36]},
-    "d": {"x_lim": (725, 1075), "y_lim": (-0.02, 0.13), "y_ticks": [0.0, 0.04, 0.08, 0.12]},
-    "e": {"x_lim": (725, 1075), "y_lim": (-0.10, 0.52), "y_ticks": [0.0, 0.16, 0.32, 0.48]},
-    "f": {"x_lim": (700, 1100), "y_lim": (-0.10, 0.52), "y_ticks": [0.0, 0.16, 0.32, 0.48]},
-}
-EXP_STYLE = {"color": "#72c5c3", "marker": "s"}
-SIM_STYLE = {"color": "#e84a8b"}
+REFERENCE_STYLE = {"color": "#1f1f1f", "marker": "o"}
+MODEL_STYLE = {"color": "#d9485f"}
+ZONE_SPANS = [(1.5, 2.4, "#e8c3cb"), (6.6, 10.4, "#b8dfd5")]
 
 
 def load_data():
     grouped = defaultdict(lambda: {"line": [], "point": []})
-
     with DATA_PATH.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
         for row in reader:
-            if row["figure_group"] != "temperature_species_profiles":
+            if row["figure_group"] != "flamelet_validation_profiles":
                 continue
             grouped[row["panel_id"]][row["series_type"]].append(
                 {
@@ -51,7 +43,6 @@ def load_data():
                     "err_high": float(row["error_high"]),
                 }
             )
-
     for panel_id in grouped:
         grouped[panel_id]["line"].sort(key=lambda item: item["x"])
         grouped[panel_id]["point"].sort(key=lambda item: item["x"])
@@ -63,65 +54,63 @@ def main() -> None:
         {
             "font.family": "DejaVu Serif",
             "mathtext.fontset": "stix",
-            "axes.linewidth": 1.1,
+            "axes.linewidth": 1.0,
             "xtick.major.width": 0.9,
             "ytick.major.width": 0.9,
         }
     )
 
     grouped = load_data()
-    fig, axes = plt.subplots(2, 3, figsize=(14, 8), dpi=180)
+    fig, axes = plt.subplots(2, 3, figsize=(14, 8.8), dpi=180)
 
     for ax, panel_id in zip(axes.flat, PANEL_ORDER):
-        line_points = grouped[panel_id]["line"]
-        point_series = grouped[panel_id]["point"]
-
-        line_x = [point["x"] for point in line_points]
-        line_y = [point["y"] for point in line_points]
-        point_x = [point["x"] for point in point_series]
-        point_y = [point["y"] for point in point_series]
+        panel = grouped[panel_id]
+        line_x = [item["x"] for item in panel["line"]]
+        line_y = [item["y"] for item in panel["line"]]
+        point_x = [item["x"] for item in panel["point"]]
+        point_y = [item["y"] for item in panel["point"]]
         point_yerr = [
-            [point["err_low"] for point in point_series],
-            [point["err_high"] for point in point_series],
+            [item["err_low"] for item in panel["point"]],
+            [item["err_high"] for item in panel["point"]],
         ]
 
-        ax.plot(line_x, line_y, color=SIM_STYLE["color"], linewidth=2.8, solid_capstyle="round")
+        for xmin, xmax, color in ZONE_SPANS:
+            ax.axvspan(xmin, xmax, color=color, alpha=0.45, lw=0)
+
+        ax.plot(line_x, line_y, color=MODEL_STYLE["color"], linewidth=2.1, label="Flamelet model")
         ax.errorbar(
             point_x,
             point_y,
             yerr=point_yerr,
-            fmt=EXP_STYLE["marker"],
-            markersize=6.8,
-            color=EXP_STYLE["color"],
-            ecolor=EXP_STYLE["color"],
-            markerfacecolor=EXP_STYLE["color"],
-            markeredgecolor=EXP_STYLE["color"],
-            elinewidth=3.0,
-            capsize=5.0,
-            capthick=2.2,
+            fmt=REFERENCE_STYLE["marker"],
+            markersize=4.5,
+            markerfacecolor="white",
+            markeredgecolor=REFERENCE_STYLE["color"],
+            markeredgewidth=0.9,
+            color=REFERENCE_STYLE["color"],
+            ecolor=REFERENCE_STYLE["color"],
+            elinewidth=0.8,
+            capsize=0,
             linestyle="None",
+            label="Reference",
         )
 
-        limits = PANEL_LIMITS[panel_id]
-        ax.set_xlim(*limits["x_lim"])
-        ax.set_ylim(*limits["y_lim"])
-        ax.set_yticks(limits["y_ticks"])
-        if panel_id == "f":
-            ax.set_xticks(list(range(700, 1101, 50)))
-        else:
-            ax.set_xticks(list(range(750, 1051, 50)))
-        ax.set_xlabel("Temperature (K)", fontsize=16)
-        ax.set_ylabel(r"Mole fraction ($10^{-3}$)", fontsize=16)
-        ax.tick_params(labelsize=11)
-        ax.text(0.03, 0.95, PANEL_TITLES[panel_id], transform=ax.transAxes, ha="left", va="top", fontsize=17, fontweight="bold")
+        meta = PANEL_META[panel_id]
+        ax.set_xlim(0, 20)
+        ax.set_ylim(*meta["y_lim"])
+        ax.set_xlabel("y [mm]", fontsize=11)
+        ax.set_ylabel(meta["y_label"], fontsize=11)
+        ax.tick_params(labelsize=9)
+        ax.grid(alpha=0.22, linewidth=0.8)
+        ax.text(0.03, 0.95, meta["title"], transform=ax.transAxes, ha="left", va="top", fontsize=14, fontweight="bold")
 
     legend_handles = [
-        Line2D([0], [0], marker="s", color="none", markerfacecolor=EXP_STYLE["color"], markeredgecolor=EXP_STYLE["color"], markersize=10, label="Experiment"),
-        Line2D([0], [0], color=SIM_STYLE["color"], linewidth=3.0, solid_capstyle="round", label="Simulation"),
+        Line2D([0], [0], marker="o", color=REFERENCE_STYLE["color"], markerfacecolor="white", markeredgecolor=REFERENCE_STYLE["color"], markersize=6, linestyle="None", label="Reference"),
+        Line2D([0], [0], color=MODEL_STYLE["color"], linewidth=2.1, label="Flamelet model"),
     ]
-    axes[0, 0].legend(handles=legend_handles, frameon=False, loc="upper right", fontsize=14, handlelength=2.6, handletextpad=0.5)
+    fig.legend(handles=legend_handles, frameon=False, loc="upper center", ncol=2, fontsize=11, bbox_to_anchor=(0.5, 0.985))
 
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
     fig.savefig(OUTPUT_PATH, bbox_inches="tight")
     plt.close(fig)
 

@@ -19,5 +19,10 @@
   "notes": [
     "This sample now reads from the compressed shared profile dataset.",
     "The inset shows the low-intensity region on the left side of the main curve."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "line-with-inset",
+    "why": "Primary starter when an inset zoom or secondary top axis is central to the figure."
+  }
 }

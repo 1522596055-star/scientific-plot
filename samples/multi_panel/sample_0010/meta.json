@@ -14,5 +14,10 @@
   },
   "notes": [
     "Selected as the most reusable figure from its source PDF."
-  ]
+  ],
+  "curation": {
+    "role": "variant",
+    "pattern_family": "two-panel-shared-x-with-baselines",
+    "why": "Useful when baseline/reference lines matter, but close enough to the stacked shared-x starter to remain a variant."
+  }
 }
