@@ -29,4 +29,6 @@ Agents should not browse this layer first.
 They should usually start with:
 1. `patterns/`
 2. `samples/`
-3. then `ref/` only if needed
+3. executable variants where relevant
+4. `reference-samples/` when a non-reproducible paper figure is still useful
+5. then `ref/` only if needed

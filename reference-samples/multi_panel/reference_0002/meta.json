@@ -1,0 +1,30 @@
+{
+  "reference_id": "reference_0002",
+  "reference_type": "reference_only",
+  "chart_family": "multi_panel",
+  "title": "conditional-profile grid for dual-fuel swirl combustion",
+  "reference_image": "reference-samples/multi_panel/reference_0002/reference.png",
+  "source_paper": "ref/papers/inbox/dns_liquid_ammonia_methane_dual_fuel_swirl_combustion.pdf",
+  "source_status": "inbox",
+  "reproducibility": "non_reproducible_without_underlying_data",
+  "image_build": "direct_crop",
+  "why_selected": "Useful reference for a dense but still readable 3x2 conditional-profile grid that pairs mean curves with spread information across two cases and several quantities.",
+  "borrow": [
+    "the left-versus-right case split",
+    "the repeated mean-plus-spread grammar across rows",
+    "the use of one normalized horizontal axis across the full grid"
+  ],
+  "avoid_copying": [
+    "the exact variable list if your problem has fewer meaningful rows",
+    "error-bar density that overwhelms the panel shapes",
+    "the full grid when a lighter starter like sample_0002 or sample_0003 is enough"
+  ],
+  "related_samples": [
+    "sample_0002",
+    "sample_0003"
+  ],
+  "related_patterns": [
+    "patterns/multi_panel.md",
+    "patterns/numerical_simulation.md"
+  ]
+}

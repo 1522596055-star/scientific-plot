@@ -29,7 +29,9 @@ Its job is to make retrieval quieter and cleaner.
 
 1. read the family note first
 2. choose a canonical starter in `samples/`
-3. read raw references only if the pattern note and samples still leave a real gap
+3. open executable variants only when their narrower structure is clearly useful
+4. consult `reference-samples/` if a non-reproducible paper figure would still sharpen the result
+5. read raw references only if the pattern note, templates, and reference-only samples still leave a real gap
 
 ## Where the references now live
 
@@ -38,6 +40,7 @@ The raw paper layer is under:
 - `../ref/papers/inbox/`
 
 The most useful curation companions are:
+- `../reference-samples/README.md`
 - `../ref/papers/INSIGHTS.md`
 - `../ref/papers/SIMULATION.md`
 - `../samples/REFRESH_CANDIDATES.md`

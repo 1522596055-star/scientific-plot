@@ -1,0 +1,30 @@
+{
+  "reference_id": "reference_0001",
+  "reference_type": "reference_only",
+  "chart_family": "line",
+  "title": "counterflow dual-axis profile pair",
+  "reference_image": "reference-samples/line/reference_0001/reference.png",
+  "source_paper": "ref/papers/inbox/counterflow_dual_fuel_flame_simulations_dcmc.pdf",
+  "source_status": "inbox",
+  "reproducibility": "non_reproducible_without_underlying_data",
+  "image_build": "direct_crop",
+  "why_selected": "Useful reference for tightly stacked dual-axis profile comparisons where one paper figure carries both thermochemical trends and a shared stoichiometric marker.",
+  "borrow": [
+    "the quiet two-panel rhythm for comparing two operating points",
+    "the visual separation between primary and secondary y-axis quantities",
+    "the restrained use of one vertical reference marker across both panels"
+  ],
+  "avoid_copying": [
+    "the exact chemistry-specific variable set",
+    "the full paper legend density when a simpler line figure would suffice",
+    "the figure unless a dual-axis profile view is scientifically necessary"
+  ],
+  "related_samples": [
+    "sample_0013",
+    "sample_0002"
+  ],
+  "related_patterns": [
+    "patterns/line.md",
+    "patterns/numerical_simulation.md"
+  ]
+}

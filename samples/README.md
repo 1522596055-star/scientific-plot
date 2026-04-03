@@ -16,6 +16,7 @@ A good working order is:
 4. open the relevant category README
 5. start from the family’s **canonical starter**
 6. only open variants when a specific structural detail is truly needed
+7. if the executable layer is still too simple, consult `../reference-samples/`
 
 ## Canonical starters and variants
 

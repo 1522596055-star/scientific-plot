@@ -7,11 +7,12 @@ It is not a paper gallery. It is a working library for turning real scientific d
 
 ## What lives here
 
-The repository has three deliberate layers:
+The repository has four deliberate layers:
 
 1. **`samples/`** — a compact set of reusable plotting templates
-2. **`patterns/`** — distilled visual judgment that should not become another sample
-3. **`ref/`** — the reference system: source papers, selected figures, inbox material, and curation notes
+2. **`reference-samples/`** — curated paper figures that are useful but not honestly reproducible as templates
+3. **`patterns/`** — distilled visual judgment that should not become another sample
+4. **`ref/`** — the broader reference system: source papers, selected figures, inbox material, and curation notes
 
 That split matters.
 The aim is to keep code retrieval fast while still preserving what the papers taught us.
@@ -48,6 +49,11 @@ scientific-plot/
     multi_panel.md
     composite.md
     numerical_simulation.md
+  reference-samples/
+    README.md
+    line/
+    multi_panel/
+    composite/
   samples/
     README.md
     REFRESH_CANDIDATES.md
@@ -83,8 +89,16 @@ These notes hold the quiet decisions that papers repeatedly reinforced:
 - when a field view belongs with profile cuts
 - when simulation plots are really trust-building validation figures rather than generic line charts
 
+### `reference-samples/`
+This is the curated non-reproducible layer.
+Use it for paper figures that are worth opening during real work, even though the repository cannot honestly rebuild them as executable templates.
+Each reference-only sample contains:
+- `reference.png`
+- `meta.json`
+- `README.md`
+
 ### `ref/`
-This is the reference system.
+This is the broader reference system.
 Both papers and selected figures live here because they are the same kind of evidence.
 
 - `ref/figures/selected/` — the image references tied to samples
@@ -106,8 +120,9 @@ A good default order is:
    - `patterns/numerical_simulation.md`
    - `ref/papers/SIMULATION.md`
 4. choose a canonical starter in `samples/`
-5. only then open variant samples
-6. only browse raw references if the distilled layers are still insufficient
+5. only then open variant samples if a specific executable detail is truly needed
+6. if the executable layer is still insufficient, consult `reference-samples/`
+7. browse the broader `ref/` archive only as a final fallback
 
 This keeps agents from getting buried in papers while still preserving paper-grade judgment.
 
@@ -125,7 +140,7 @@ This keeps agents from getting buried in papers while still preserving paper-gra
 ### When a new image arrives
 1. move it into `ref/figures/selected/` with a normalized filename
 2. reuse an existing shared dataset if possible
-3. either update one sample or distill the idea into `patterns/`
+3. either update one sample, preserve it in `reference-samples/`, or distill the idea into `patterns/`
 
 ### When a new paper arrives
 1. move it into `ref/papers/inbox/`
@@ -134,6 +149,7 @@ This keeps agents from getting buried in papers while still preserving paper-gra
 4. decide whether its best home is:
    - a refreshed sample
    - a new variant sample
+   - a reference-only sample
    - a pattern note
    - or retained archive-only evidence
 5. if it is absorbed, move it to `ref/papers/archive/` and update the curation notes

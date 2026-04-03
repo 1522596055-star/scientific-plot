@@ -1,0 +1,30 @@
+{
+  "reference_id": "reference_0004",
+  "reference_type": "reference_only",
+  "chart_family": "composite",
+  "title": "dual-fuel swirl contours plus extracted profiles",
+  "reference_image": "reference-samples/composite/reference_0004/reference.png",
+  "source_paper": "ref/papers/inbox/dns_liquid_ammonia_methane_dual_fuel_swirl_combustion.pdf",
+  "source_status": "inbox",
+  "reproducibility": "non_reproducible_without_underlying_data",
+  "image_build": "curated_montage",
+  "why_selected": "Useful reference for a compact field-plus-profile composite: one upper contour view establishes combustion-mode structure, and one lower row of extracted profiles quantifies it.",
+  "borrow": [
+    "the field-on-top, profiles-below hierarchy",
+    "the way two cases are compared in the contour block before the lower quantitative cuts",
+    "the balance between visual combustion structure and profile-level verification"
+  ],
+  "avoid_copying": [
+    "the exact dual-fuel variable set and combustion labels",
+    "the full figure if you only need profiles and no spatial context",
+    "the composition if your field panel and extracted cuts are not directly linked"
+  ],
+  "related_samples": [
+    "sample_0002",
+    "sample_0007"
+  ],
+  "related_patterns": [
+    "patterns/composite.md",
+    "patterns/numerical_simulation.md"
+  ]
+}

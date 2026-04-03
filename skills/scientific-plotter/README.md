@@ -14,5 +14,6 @@ Key bundled resources:
 - `../../patterns/multi_panel.md` — multi-panel curation and canonical starters
 - `../../patterns/composite.md` — guidance for field-map, schematic, and chart composites
 - `../../patterns/numerical_simulation.md` — simulation-facing plotting judgment
+- `../../reference-samples/README.md` — curated non-reproducible figure references
 - `../../ref/papers/SIMULATION.md` — fuller review of the simulation-heavy paper set
 - `../../samples/REFRESH_CANDIDATES.md` — templates most likely to matter in future refresh decisions

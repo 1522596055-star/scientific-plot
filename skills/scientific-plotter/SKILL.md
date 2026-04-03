@@ -168,6 +168,7 @@ Then read the best candidates:
 If category-level orientation is needed, also read:
 - `../../README.md`
 - `../../samples/README.md`
+- `../../reference-samples/README.md` when a non-reproducible paper figure may still be useful as a visual guide
 - the relevant category README under `../../samples/<category>/README.md`
 
 If several samples look plausible, read:
@@ -175,6 +176,7 @@ If several samples look plausible, read:
 - `references/data-to-chart-guide.md`
 
 For line and multi-panel families, prefer the candidate whose `meta.json` marks it as a **canonical** starter unless the user clearly needs a variant-specific feature.
+If the executable sample layer is still not enough, consult `../../reference-samples/README.md` and the relevant family there before falling back to the broader raw reference archive.
 If the task is clearly simulation-oriented, give extra attention to the guidance in `../../patterns/numerical_simulation.md` and to any repository notes that identify refresh candidates from newer simulation papers.
 
 ### 7) Choose inspiration templates

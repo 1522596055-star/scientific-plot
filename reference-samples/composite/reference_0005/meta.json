@@ -1,0 +1,30 @@
+{
+  "reference_id": "reference_0005",
+  "reference_type": "reference_only",
+  "chart_family": "composite",
+  "title": "evaporation summaries with field context",
+  "reference_image": "reference-samples/composite/reference_0005/reference.png",
+  "source_paper": "ref/papers/inbox/les_n_heptane_n_dodecane_binary_blend_spray_flames.pdf",
+  "source_status": "inbox",
+  "reproducibility": "non_reproducible_without_underlying_data",
+  "image_build": "curated_montage",
+  "why_selected": "Useful reference for combining repeated downstream summary charts with one spatial field strip so that composition-dependent evolution is visible both quantitatively and geometrically.",
+  "borrow": [
+    "the pairing of repeated summary charts with one field-context strip",
+    "the use of one repeated chart grammar across several blends or cases",
+    "the idea that field context can stay compressed rather than dominating the page"
+  ],
+  "avoid_copying": [
+    "the exact fuel-component interpretation and panel count",
+    "the figure if the field strip does not actually help interpret the line charts",
+    "the full paper density when one case or one summary block is enough"
+  ],
+  "related_samples": [
+    "sample_0002",
+    "sample_0013"
+  ],
+  "related_patterns": [
+    "patterns/composite.md",
+    "patterns/numerical_simulation.md"
+  ]
+}

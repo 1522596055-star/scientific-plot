@@ -1,0 +1,27 @@
+{
+  "reference_id": "reference_0003",
+  "reference_type": "reference_only",
+  "chart_family": "composite",
+  "title": "phase-conditioned chemiluminescence versus LES sheet",
+  "reference_image": "reference-samples/composite/reference_0003/reference.png",
+  "source_paper": "ref/papers/inbox/plasma_stabilization_sequential_combustor_les_experiments.pdf",
+  "source_status": "inbox",
+  "reproducibility": "non_reproducible_without_underlying_data",
+  "image_build": "direct_crop",
+  "why_selected": "Useful reference for a disciplined experiment-versus-simulation imaging matrix where phase, actuation state, and two data modalities are all visible without collapsing into visual noise.",
+  "borrow": [
+    "the strong left-versus-right comparison between experiment and LES",
+    "the top-versus-bottom phase-state split",
+    "the repeated panel rhythm that makes many images still feel readable"
+  ],
+  "avoid_copying": [
+    "the full image count if your story can be told with fewer states",
+    "the exact plasma- or combustor-specific annotations",
+    "the figure when you do not have true image-like evidence to pair with the chart"
+  ],
+  "related_samples": [],
+  "related_patterns": [
+    "patterns/composite.md",
+    "patterns/numerical_simulation.md"
+  ]
+}
