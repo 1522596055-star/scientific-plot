@@ -62,15 +62,26 @@ ALIASES = {
     "bubbles": "bubble",
     "matrix": "heatmap",
     "correlation": "heatmap",
-    "subplot": "panel",
-    "subplots": "panel",
+    "subplot": "subplot",
+    "subplots": "subplot",
     "two-panel": "two_panel",
     "single-panel": "single_panel",
     "multi-panel": "multi_panel",
+    "multi-line": "multi_line",
     "x-axis": "x_axis",
     "y-axis": "y_axis",
     "shared-x": "shared_x",
     "shared-axis": "shared_axis",
+}
+COMPOUND_TOKENS = {
+    "single_panel",
+    "two_panel",
+    "multi_panel",
+    "multi_line",
+    "x_axis",
+    "y_axis",
+    "shared_x",
+    "shared_axis",
 }
 GENERIC_AVOID_MATCH_TOKENS = {
     "axis",
@@ -108,7 +119,7 @@ def normalize_tokens(text: str) -> list[str]:
     for raw in raw_tokens:
         normalized = ALIASES.get(raw, raw).replace("-", "_")
         variants = [normalized]
-        if "_" in normalized:
+        if "_" in normalized and normalized not in COMPOUND_TOKENS:
             variants.extend(part for part in normalized.split("_") if part)
         for variant in variants:
             candidate = ALIASES.get(variant, variant)
@@ -186,14 +197,16 @@ def heuristic_bonus(query_text: str, sample: Sample) -> tuple[float, list[str]]:
             reasons.append(reason)
 
     add_if(any(word in query for word in ["bar", "category", "sensitivity"]) and sample.category == "bar", 5.0, "bar-family heuristic")
-    add_if(any(word in query for word in ["line", "profile", "trend", "scan", "inset"]) and sample.category == "line", 4.5, "line-family heuristic")
-    add_if(any(word in query for word in ["multi", "subplot", "subplots", "panel", "2x", "3x"]) and sample.category == "multi_panel", 6.5, "multi-panel heuristic")
+    add_if(any(word in query for word in ["line", "profile", "trend", "scan", "inset", "multi-line", "multi line"]) and sample.category == "line", 4.5, "line-family heuristic")
+    add_if(query_has_any(query, ["single-panel", "single panel", "single axis", "one axis", "overlay"]) and sample.category == "line", 5.0, "single-panel line heuristic")
+    add_if(query_has_any(query, ["multi-panel", "multi panel", "subplot", "subplots", "small multiples", "stacked panels", "1x2", "2x1", "2x2", "2x3", "3x2"]) and sample.category == "multi_panel", 6.5, "multi-panel heuristic")
     add_if(any(word in query for word in ["scatter", "point", "points", "bubble"]) and sample.category == "scatter", 5.5, "scatter-family heuristic")
     add_if(any(word in query for word in ["boxplot", "violin", "histogram", "distribution"]) and sample.category == "distribution", 6.0, "distribution-family heuristic")
     add_if(any(word in query for word in ["heatmap", "matrix", "correlation"]) and sample.category == "heatmap", 7.0, "heatmap-family heuristic")
     add_if("grouped" in query and "grouped" in sample.chart_type, 4.0, "grouped-bar match")
     add_if("horizontal" in query and "horizontal" in sample.chart_type, 4.0, "horizontal-bar match")
-    add_if(query_has_any(query, ["two-panel", "two panel", "stacked panels", "top panel", "bottom panel"]) and sample.chart_type.startswith("two_panel"), 5.0, "two-panel layout match")
+    add_if(query_has_any(query, ["two-panel", "two panel", "top panel", "bottom panel"]) and sample.chart_type.startswith("two_panel"), 5.0, "two-panel layout match")
+
     sample_shared_x = (
         any(phrase in sample_reuse_text for phrase in ["shared x-axis", "same x-axis", "share the same x-axis"])
         or "shared-x" in (sample.pattern_family or "")
@@ -204,6 +217,7 @@ def heuristic_bonus(query_text: str, sample: Sample) -> tuple[float, list[str]]:
     add_if("log" in query and ("log" in sample_reuse_text or "log" in sample.chart_type.lower()), 3.0, "log-axis match")
     add_if(any(word in query for word in ["error", "uncertainty", "spread"]) and any(word in sample_reuse_text for word in ["error", "uncertainty", "spread"]), 3.0, "uncertainty match")
     add_if("bubble" in query and "bubble" in sample_reuse_text, 5.0, "bubble match")
+    add_if(sample.pattern_family == "plain-multi-line" and query_has_any(query, ["plain single-panel", "single-panel", "single panel", "multi-line", "multi line", "continuous x-axis", "continuous x axis"]), 4.0, "plain multi-line starter match")
     return bonus, reasons
 
 
@@ -220,12 +234,15 @@ def structural_penalty(query_text: str, query_counter: Counter[str], sample: Sam
         penalty += avoid_penalty
         reasons.append("avoid_when penalty")
 
-    if query_has_any(query, ["two-panel", "two panel", "stacked panels", "top panel", "bottom panel", "shared x-axis", "shared x axis"]) and sample.category != "multi_panel":
+    if query_has_any(query, ["two-panel", "two panel", "top panel", "bottom panel", "shared x-axis", "shared x axis"]) and sample.category != "multi_panel":
         penalty += 4.5
         reasons.append("explicit multi-panel mismatch")
     if query_has_any(query, ["single-panel", "single panel", "single axis", "one axis", "overlay"]) and sample.category == "multi_panel":
-        penalty += 3.0
+        penalty += 6.5
         reasons.append("single-panel mismatch")
+    if query_has_any(query, ["multi-line", "multi line"]) and sample.category == "multi_panel" and not query_has_any(query, ["multi-panel", "multi panel", "subplot", "subplots"]):
+        penalty += 5.0
+        reasons.append("multi-line is not multi-panel penalty")
     if "bubble" in query and sample.category != "scatter":
         penalty += 5.0
         reasons.append("bubble-layout mismatch")
@@ -244,11 +261,11 @@ def score_sample(query_text: str, sample: Sample) -> tuple[float, list[str]]:
     reasons: list[str] = []
 
     score = 0.0
-    score += weighted_overlap(query_counter, sample.category.replace("_", " "), 4.0)
-    score += weighted_overlap(query_counter, sample.chart_type.replace("_", " "), 5.0)
+    score += weighted_overlap(query_counter, sample.category, 4.0)
+    score += weighted_overlap(query_counter, sample.chart_type, 5.0)
     score += weighted_overlap(query_counter, " ".join(sample.reuse_when), 3.0)
     score += weighted_overlap(query_counter, sample.figure_group or "", 2.0)
-    score += weighted_overlap(query_counter, (sample.pattern_family or "").replace("-", " "), 2.0)
+    score += weighted_overlap(query_counter, sample.pattern_family or "", 2.0)
 
     if sample.curation_role == "canonical":
         score += 2.0

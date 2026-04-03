@@ -48,6 +48,22 @@
       "files": [
         "evals/fixtures/cluster_embedding_points.csv"
       ]
+    },
+    {
+      "id": 7,
+      "prompt": "This csv is already in row/column/value form for a similarity matrix. Please choose a publication-style visualization and return both the figure and the plotting script.",
+      "expected_output": "The skill should recognize long-form matrix structure and prefer a heatmap-oriented visualization rather than a grouped bar chart.",
+      "files": [
+        "evals/fixtures/long_form_similarity_matrix.csv"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "This tidy scientific table has panel, series, x, y, and uncertainty bounds. Please pick a suitable publication-style visualization and return both the figure and the plotting script.",
+      "expected_output": "The skill should keep this on a line/validation path with uncertainty rather than misclassifying it as a heatmap.",
+      "files": [
+        "evals/fixtures/validation_profile_with_errors.csv"
+      ]
     }
   ]
 }

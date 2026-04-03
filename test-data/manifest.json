@@ -14,6 +14,10 @@
       "expected_chart": "heatmap"
     },
     {
+      "file": "long_form_similarity_matrix.csv",
+      "expected_chart": "heatmap"
+    },
+    {
       "file": "treatment_conversion_repeats.csv",
       "expected_chart": "boxplot"
     },
@@ -24,6 +28,10 @@
     {
       "file": "cluster_embedding_points.csv",
       "expected_chart": "bubble_scatter"
+    },
+    {
+      "file": "validation_profile_with_errors.csv",
+      "expected_chart": "line_with_uncertainty_or_validation_line"
     }
   ]
 }

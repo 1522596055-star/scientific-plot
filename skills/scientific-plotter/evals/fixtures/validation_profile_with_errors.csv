@@ -1,0 +1,13 @@
+panel_id,series_id,x_value,y_value,error_low,error_high
+temperature,simulation,0.0,300,292,308
+temperature,simulation,0.5,520,505,535
+temperature,simulation,1.0,790,770,810
+temperature,experiment,0.0,320,310,330
+temperature,experiment,0.5,540,525,555
+temperature,experiment,1.0,770,750,790
+species,simulation,0.0,0.22,0.20,0.24
+species,simulation,0.5,0.12,0.10,0.14
+species,simulation,1.0,0.05,0.04,0.06
+species,experiment,0.0,0.24,0.22,0.26
+species,experiment,0.5,0.11,0.09,0.13
+species,experiment,1.0,0.06,0.05,0.07

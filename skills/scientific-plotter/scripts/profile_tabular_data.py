@@ -66,9 +66,49 @@ Y_NAME_HINTS = {
     "ppm",
     "velocity",
     "temperature_rise",
+    "measurement",
 }
 SIZE_NAME_HINTS = {"size", "bubble", "radius", "diameter", "area", "weight"}
 LOG_SCALE_HINTS = {"delay", "ignition", "lifetime", "timescale", "residence"}
+UNCERTAINTY_HINTS = {
+    "error",
+    "low",
+    "high",
+    "lower",
+    "upper",
+    "std",
+    "stdev",
+    "stderr",
+    "sem",
+    "ci",
+    "band",
+    "uncertainty",
+    "rms",
+}
+TIDY_STRUCTURE_HINTS = {
+    "panel",
+    "series",
+    "group",
+    "condition",
+    "case",
+    "profile",
+    "scan",
+    "x",
+    "y",
+    "time",
+    "error",
+    "low",
+    "high",
+    "lower",
+    "upper",
+    "std",
+    "stderr",
+    "sem",
+    "rms",
+}
+MATRIX_ROW_HINTS = {"row", "source", "from"}
+MATRIX_COL_HINTS = {"col", "column", "target", "to"}
+MATRIX_VALUE_HINTS = {"value", "score", "similarity", "correlation", "distance", "weight", "metric"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -236,6 +276,14 @@ def combo_counts(rows: list[dict[str, Any]], columns: list[str]) -> Counter[tupl
     return counts
 
 
+def normalized_unique_values(rows: list[dict[str, Any]], column: str) -> set[str]:
+    return {
+        value
+        for value in (normalize_value(row.get(column)) for row in rows)
+        if value is not None
+    }
+
+
 def monotonic_within_groups(rows: list[dict[str, Any]], value_column: str, group_column: str) -> bool:
     grouped: dict[str, list[float]] = defaultdict(list)
     for row in rows:
@@ -300,6 +348,81 @@ def choose_size_candidate(profiles: list[dict[str, Any]]) -> str | None:
     return candidates[0] if candidates else None
 
 
+def detect_long_form_matrix(
+    rows: list[dict[str, Any]], profiles: list[dict[str, Any]]
+) -> dict[str, str] | None:
+    label_profiles = [profile for profile in profiles if profile["role"] in {"categorical", "text"}]
+    numeric_profiles = [profile for profile in profiles if str(profile.get("role", "")).startswith("numeric")]
+    if len(label_profiles) < 2 or len(numeric_profiles) != 1:
+        return None
+
+    value_name = numeric_profiles[0]["name"]
+    for row_profile in label_profiles:
+        row_name = row_profile["name"]
+        row_values = normalized_unique_values(rows, row_name)
+        if len(row_values) < 3:
+            continue
+        for col_profile in label_profiles:
+            col_name = col_profile["name"]
+            if col_name == row_name:
+                continue
+            col_values = normalized_unique_values(rows, col_name)
+            if len(col_values) < 3:
+                continue
+            counts = combo_counts(rows, [row_name, col_name])
+            full_rectangular_grid = len(counts) == len(rows) == len(row_values) * len(col_values)
+            if not full_rectangular_grid:
+                continue
+
+            named_like_matrix = has_name_hint(row_name, MATRIX_ROW_HINTS) and has_name_hint(col_name, MATRIX_COL_HINTS)
+            symmetric_label_domain = row_values == col_values
+            value_named_like_matrix = has_name_hint(value_name, MATRIX_VALUE_HINTS)
+            if named_like_matrix or (symmetric_label_domain and value_named_like_matrix):
+                return {
+                    "row_labels": row_name,
+                    "col_labels": col_name,
+                    "value_column": value_name,
+                }
+    return None
+
+
+def detect_wide_matrix(columns: list[str], profiles: list[dict[str, Any]]) -> dict[str, Any] | None:
+    if len(columns) < 5:
+        return None
+
+    by_name = {profile["name"]: profile for profile in profiles}
+    first_column = columns[0]
+    first_profile = by_name[first_column]
+    if first_profile["role"] not in {"categorical", "text"}:
+        return None
+    if first_profile["unique_count"] != first_profile["nonempty_count"]:
+        return None
+    if first_profile["unique_count"] < 4:
+        return None
+
+    remaining_columns = columns[1:]
+    if any(not str(by_name[column].get("role", "")).startswith("numeric") for column in remaining_columns):
+        return None
+    if any(has_name_hint(column, TIDY_STRUCTURE_HINTS | UNCERTAINTY_HINTS) for column in remaining_columns):
+        return None
+
+    return {
+        "row_labels": first_column,
+        "value_columns": remaining_columns,
+    }
+
+
+def split_measure_columns(measure_columns: list[str]) -> tuple[list[str], list[str]]:
+    trend_columns: list[str] = []
+    uncertainty_columns: list[str] = []
+    for column in measure_columns:
+        if has_name_hint(column, UNCERTAINTY_HINTS):
+            uncertainty_columns.append(column)
+        else:
+            trend_columns.append(column)
+    return trend_columns, uncertainty_columns
+
+
 def score_x_candidate(profile: dict[str, Any], columns: list[str], size_candidate: str | None) -> float:
     score = 0.0
     role = profile["role"]
@@ -354,6 +477,8 @@ def score_y_candidate(profile: dict[str, Any], x_name: str | None, size_candidat
         score += 2.5
     if profile.get("log_scale_candidate"):
         score += 3.0
+    if has_name_hint(profile["name"], UNCERTAINTY_HINTS):
+        score -= 4.0
 
     for token in tokenize_name(profile["name"]):
         if token in Y_NAME_HINTS:
@@ -383,29 +508,35 @@ def choose_primary_group(group_candidates: list[str]) -> str | None:
 
 def build_recommendations(columns: list[str], rows: list[dict[str, Any]], profiles: list[dict[str, Any]]) -> list[dict[str, Any]]:
     by_name = {profile["name"]: profile for profile in profiles}
-    numeric_columns = [profile["name"] for profile in profiles if profile["role"].startswith("numeric")]
+    numeric_columns = [profile["name"] for profile in profiles if str(profile.get("role", "")).startswith("numeric")]
     categorical_columns = [profile["name"] for profile in profiles if profile["role"] == "categorical"]
     group_candidates = choose_group_candidates(profiles)
     size_candidate = choose_size_candidate(profiles)
     recommendations: list[dict[str, Any]] = []
 
-    first_column = columns[0] if columns else None
-    first_profile = by_name.get(first_column) if first_column else None
-    wide_matrix_candidate = (
-        first_profile is not None
-        and first_profile["role"] in {"categorical", "text"}
-        and len(numeric_columns) >= 4
-        and len(rows) >= 4
-    )
-    if wide_matrix_candidate:
+    long_form_matrix = detect_long_form_matrix(rows, profiles)
+    if long_form_matrix is not None:
+        return [
+            recommendation(
+                "heatmap",
+                "single_panel",
+                0.95,
+                "The table looks like a long-form matrix: row labels, column labels, and one numeric value per cell.",
+                "annotated heatmap from long-form row/column/value matrix data",
+                long_form_matrix,
+            )
+        ]
+
+    wide_matrix = detect_wide_matrix(columns, profiles)
+    if wide_matrix is not None:
         return [
             recommendation(
                 "heatmap",
                 "single_panel",
                 0.93,
-                "The table looks like a labeled matrix: one row label column plus many numeric columns.",
+                "The table looks like a labeled wide matrix: one unique row-label column plus many numeric value columns.",
                 "annotated heatmap showing matrix values with row and column labels",
-                {"row_labels": first_column, "value_columns": numeric_columns},
+                wide_matrix,
             )
         ]
 
@@ -413,8 +544,9 @@ def build_recommendations(columns: list[str], rows: list[dict[str, Any]], profil
     chosen_x = x_ranking[0][0] if x_ranking else None
     measure_ranking = ranked_measure_candidates(profiles, chosen_x, size_candidate)
     measure_columns = [name for name, _ in measure_ranking]
+    trend_measure_columns, uncertainty_columns = split_measure_columns(measure_columns)
     primary_group = choose_primary_group(group_candidates)
-    primary_y = measure_columns[0] if measure_columns else None
+    primary_y = trend_measure_columns[0] if trend_measure_columns else (measure_columns[0] if measure_columns else None)
 
     bubble_ready = bool(size_candidate and chosen_x and primary_y)
     if bubble_ready:
@@ -440,7 +572,15 @@ def build_recommendations(columns: list[str], rows: list[dict[str, Any]], profil
         )
         return recommendations
 
-    if first_profile is not None and first_profile["role"] == "categorical" and 2 <= len(numeric_columns) <= 4 and len(rows) <= 20:
+    first_column = columns[0] if columns else None
+    first_profile = by_name.get(first_column) if first_column else None
+    if (
+        first_profile is not None
+        and first_profile["role"] == "categorical"
+        and len(categorical_columns) == 1
+        and 2 <= len(numeric_columns) <= 4
+        and len(rows) <= 20
+    ):
         recommendations.append(
             recommendation(
                 "bar",
@@ -489,7 +629,33 @@ def build_recommendations(columns: list[str], rows: list[dict[str, Any]], profil
 
     if chosen_x and primary_y:
         primary_y_profile = by_name[primary_y]
-        if primary_y_profile.get("log_scale_candidate"):
+        if uncertainty_columns and len(trend_measure_columns) == 1:
+            recommendations.append(
+                recommendation(
+                    "line",
+                    "single_panel_with_uncertainty",
+                    0.91,
+                    "The table looks like a tidy scientific trend with one main response plus uncertainty bounds, which should usually stay one line figure rather than becoming a heatmap or a fake multi-metric panel stack.",
+                    "scientific line plot with uncertainty bounds over a shared x-axis",
+                    {
+                        "x": chosen_x,
+                        "y": primary_y,
+                        "group": primary_group,
+                        "uncertainty_columns": uncertainty_columns,
+                    },
+                )
+            )
+            recommendations.append(
+                recommendation(
+                    "scatter",
+                    "single_panel",
+                    0.76,
+                    "If the uncertainty columns are secondary and the points should stay explicit, scatter remains a reasonable fallback.",
+                    "scientific scatter plot comparing groups across two variables",
+                    {"x": chosen_x, "y": primary_y, "group": primary_group},
+                )
+            )
+        elif primary_y_profile.get("log_scale_candidate"):
             recommendations.append(
                 recommendation(
                     "scatter",
@@ -510,7 +676,7 @@ def build_recommendations(columns: list[str], rows: list[dict[str, Any]], profil
                     {"x": chosen_x, "y": primary_y, "group": primary_group, "y_scale": "log"},
                 )
             )
-        elif len(measure_columns) >= 2:
+        elif len(trend_measure_columns) >= 2:
             recommendations.append(
                 recommendation(
                     "multi_panel",
@@ -518,7 +684,7 @@ def build_recommendations(columns: list[str], rows: list[dict[str, Any]], profil
                     0.9,
                     "The table has one likely progression axis and multiple numeric responses, which is a strong fit for vertically stacked line panels.",
                     "two-panel figure with separate metrics over a shared x-axis for multiple groups",
-                    {"x": chosen_x, "measures": measure_columns[:3], "group": primary_group},
+                    {"x": chosen_x, "measures": trend_measure_columns[:3], "group": primary_group},
                 )
             )
             recommendations.append(

@@ -21,6 +21,11 @@ def assert_equal(actual: object, expected: object, message: str) -> None:
         raise AssertionError(f"{message}: expected {expected!r}, got {actual!r}")
 
 
+def assert_true(condition: bool, message: str) -> None:
+    if not condition:
+        raise AssertionError(message)
+
+
 def validate_profiler() -> None:
     cases = [
         {
@@ -33,6 +38,10 @@ def validate_profiler() -> None:
         },
         {
             "path": "test-data/method_similarity_matrix.tsv",
+            "chart_family": "heatmap",
+        },
+        {
+            "path": "test-data/long_form_similarity_matrix.csv",
             "chart_family": "heatmap",
         },
         {
@@ -64,9 +73,20 @@ def validate_profiler() -> None:
     assert_equal(bubble_top["mapping_hints"]["y"], "y", "bubble y mapping")
     assert_equal(bubble_top["mapping_hints"]["size"], "bubble_size", "bubble size mapping")
 
+    validation = run_json([sys.executable, str(PROFILER), "test-data/validation_profile_with_errors.csv"])
+    validation_top = validation["recommended_patterns"][0]
+    assert_equal(validation_top["chart_family"], "line", "validation table should stay on a line-oriented path")
+    assert_equal(validation_top["layout"], "single_panel_with_uncertainty", "validation table should prefer line-with-uncertainty")
+    assert_equal(validation_top["mapping_hints"]["x"], "x_value", "validation table x mapping")
+    assert_equal(validation_top["mapping_hints"]["y"], "y_value", "validation table y mapping")
+    assert_true(
+        "error_low" in validation_top["mapping_hints"]["uncertainty_columns"] and "error_high" in validation_top["mapping_hints"]["uncertainty_columns"],
+        "validation table should expose uncertainty columns",
+    )
+
 
 def validate_finder() -> None:
-    result = run_json(
+    shared_x_result = run_json(
         [
             sys.executable,
             str(FINDER),
@@ -76,8 +96,21 @@ def validate_finder() -> None:
             "5",
         ]
     )
-    top = result["results"][0]
-    assert_equal(top["sample_id"], "sample_0014", "shared-x multi-panel query should prefer sample_0014")
+    shared_x_top = shared_x_result["results"][0]
+    assert_equal(shared_x_top["sample_id"], "sample_0014", "shared-x multi-panel query should prefer sample_0014")
+
+    single_panel_result = run_json(
+        [
+            sys.executable,
+            str(FINDER),
+            "--query",
+            "plain single-panel multi-line scientific trend over a continuous x-axis",
+            "--top",
+            "5",
+        ]
+    )
+    single_panel_top = single_panel_result["results"][0]
+    assert_equal(single_panel_top["sample_id"], "sample_0013", "single-panel multi-line query should prefer sample_0013")
 
 
 if __name__ == "__main__":
