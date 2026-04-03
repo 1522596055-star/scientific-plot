@@ -1,8 +1,8 @@
 {
   "sample_id": "sample_0013",
   "chart_type": "multi_line",
-  "reference_image": "ref/pdf_selected/sample_0013_reduced_order_temperature_solutions.jpg",
-  "source_pdf": "pdf/local_principal_component_transport_reacting_flow.pdf",
+  "reference_image": "ref/figures/selected/sample_0013_reduced_order_temperature_solutions.jpg",
+  "source_pdf": "ref/papers/archive/local_principal_component_transport_reacting_flow.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],

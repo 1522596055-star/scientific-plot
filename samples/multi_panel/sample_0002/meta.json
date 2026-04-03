@@ -1,8 +1,8 @@
 {
   "sample_id": "sample_0002",
   "chart_type": "multi_panel_line_and_point_validation",
-  "reference_image": "ref/pdf_selected/sample_0002_mixture_fraction_temperature_profiles.jpg",
-  "source_pdf": "pdf/large_eddy_simulation_partially_cracked_ammonia_flames.pdf",
+  "reference_image": "ref/figures/selected/sample_0002_mixture_fraction_temperature_profiles.jpg",
+  "source_pdf": "ref/papers/archive/large_eddy_simulation_partially_cracked_ammonia_flames.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],

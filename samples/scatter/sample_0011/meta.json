@@ -1,8 +1,8 @@
 {
   "sample_id": "sample_0011",
   "chart_type": "two_panel_scatter",
-  "reference_image": "ref/pdf_selected/sample_0011_extinction_limits_scatter.jpg",
-  "source_pdf": "pdf/extinction_limits_hydrocarbon_ammonia_diffusion_flames.pdf",
+  "reference_image": "ref/figures/selected/sample_0011_extinction_limits_scatter.jpg",
+  "source_pdf": "ref/papers/archive/extinction_limits_hydrocarbon_ammonia_diffusion_flames.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],

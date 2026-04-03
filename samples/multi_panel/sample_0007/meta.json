@@ -1,8 +1,8 @@
 {
   "sample_id": "sample_0007",
   "chart_type": "two_panel_validation_pair",
-  "reference_image": "ref/pdf_selected/sample_0007_porous_media_validation_pair.jpg",
-  "source_pdf": "pdf/volume_averaged_ammonia_air_porous_media_dispersion.pdf",
+  "reference_image": "ref/figures/selected/sample_0007_porous_media_validation_pair.jpg",
+  "source_pdf": "ref/papers/archive/volume_averaged_ammonia_air_porous_media_dispersion.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],

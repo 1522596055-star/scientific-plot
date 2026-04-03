@@ -1,7 +1,7 @@
 {
   "sample_id": "sample_0005",
   "chart_type": "single_panel_multi_line_with_inset",
-  "reference_image": "ref/image_selected/sample_0005_ch4_production_rate_profiles.jpg",
+  "reference_image": "ref/figures/selected/sample_0005_ch4_production_rate_profiles.jpg",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],

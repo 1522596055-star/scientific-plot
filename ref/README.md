@@ -1,16 +1,32 @@
 # ref
 
-Selected reference figures used to build samples.
+The repository’s unified reference layer.
+
+Papers and selected figures live together here because they serve the same purpose:
+**they are evidence for how a plotting template or pattern note was chosen.**
 
 ## Structure
 
-- `image_selected/` — references that originated from standalone image files
-- `pdf_selected/` — references selected or cropped from archived PDFs in `pdf/`
+- `figures/selected/` — reference images tied to individual samples
+- `papers/archive/` — normalized papers already absorbed into the library
+- `papers/inbox/` — normalized papers still under review
+- `papers/INSIGHTS.md` — soft takeaways from the archived papers
+- `papers/SIMULATION.md` — the fuller simulation-heavy curation map
+
+## Design rule
+
+Do not split references into separate top-level systems for “images” and “PDFs”.
+Keep them together here, with clean subfolders and clean naming.
 
 ## Naming rule
 
-Reference images use normalized names such as:
-- `sample_0006_flame_coordinate_vs_flow.jpg`
-- `sample_0014_rcci_efficiency_vs_per.jpg`
+- figures stay tied to the sample that uses them, e.g. `sample_0003_flamelet_validation_grid.jpg`
+- papers use readable normalized filenames, not raw download IDs
 
-This keeps the reference clearly tied to the sample that uses it.
+## Retrieval rule
+
+Agents should not browse this layer first.
+They should usually start with:
+1. `patterns/`
+2. `samples/`
+3. then `ref/` only if needed

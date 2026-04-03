@@ -1,8 +1,8 @@
 {
   "sample_id": "sample_0014",
   "chart_type": "two_panel_line",
-  "reference_image": "ref/pdf_selected/sample_0014_rcci_efficiency_vs_per.jpg",
-  "source_pdf": "pdf/ammonia_methanol_diesel_rcci_marine_engines.pdf",
+  "reference_image": "ref/figures/selected/sample_0014_rcci_efficiency_vs_per.jpg",
+  "source_pdf": "ref/papers/archive/ammonia_methanol_diesel_rcci_marine_engines.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],

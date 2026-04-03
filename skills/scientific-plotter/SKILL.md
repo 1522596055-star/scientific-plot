@@ -136,6 +136,7 @@ If the likely family is one of the crowded ones, also read:
 - `../../patterns/multi_panel.md`
 - `../../patterns/composite.md` when the target mixes charts with images, schematics, or field maps
 - `../../patterns/numerical_simulation.md` when the task sounds like LES/DNS/flamelet/reduced-order or simulation-vs-reference plotting
+- `../../ref/papers/SIMULATION.md` when simulation-heavy reference judgment may influence template choice
 
 Use these notes to avoid opening too many near-duplicate samples.
 Prefer a **canonical starter** before browsing narrower variants.
@@ -269,6 +270,7 @@ Use these when needed:
 - `../../patterns/multi_panel.md`
 - `../../patterns/composite.md`
 - `../../patterns/numerical_simulation.md`
+- `../../ref/papers/SIMULATION.md`
 - `../../README.md`
 - `../../samples/README.md`
 - `../../samples/REFRESH_CANDIDATES.md`

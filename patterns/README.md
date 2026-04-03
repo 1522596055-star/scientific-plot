@@ -1,68 +1,52 @@
 # patterns
 
-Distilled plotting ideas that sit between raw paper references and fully reproducible samples.
+Pattern notes sit between the sample library and the raw reference archive.
 
-Use this directory when you want the **good scientific judgment** from published figures without drowning an agent in too many near-duplicate examples.
+They exist for one reason:
+**many good paper figures teach useful judgment without deserving another template directory.**
 
-## Why this layer exists
+## What belongs here
 
-Not every useful paper figure should become a new `plot.py` template.
+A pattern note should capture:
+- a recurring structural decision
+- a small set of reliable starter samples
+- the fine points that make the family work
+- the boundary between “worth templating” and “worth only remembering”
 
-A figure may be worth keeping because it teaches:
-- when to split one figure into multiple panels
-- when to add an inset
-- how to encode two variables with color and linestyle
-- how to place legends and annotations lightly
-- how to simplify a paper figure into a reusable plotting pattern
+A pattern note should **not** become a loose essay or a paper dump.
+Its job is to make retrieval quieter and cleaner.
 
-Those lessons belong here even when the exact figure is too domain-specific or too detailed to justify a new sample.
+## Current notes
 
-## Three-layer curation model
+| Note | Use it for |
+|---|---|
+| `line.md` | single-panel scientific line figures, including inset and branch decisions |
+| `multi_panel.md` | stacked layouts, validation pairs, compact repeats, and dense grids |
+| `composite.md` | chart + field, chart + schematic, chart + image, and mixed scientific figures |
+| `numerical_simulation.md` | simulation-heavy plotting judgment, especially validation-oriented work |
 
-### 1. Canonical samples
-Keep a **small** set of starter templates in `samples/`.
-These are the first place an agent should look for reusable plotting code.
+## Working order for agents
 
-### 2. Pattern notes
-Use `patterns/` for ideas that are valuable but do not need a dedicated script template.
-This is the main place to capture visual judgment from papers.
+1. read the family note first
+2. choose a canonical starter in `samples/`
+3. read raw references only if the pattern note and samples still leave a real gap
 
-### 3. Raw references
-Keep original images and PDFs in `ref/` and `pdf/`, but do not make them the default retrieval surface.
-They are evidence and fallback material, not the first thing an agent should browse.
+## Where the references now live
 
-## Current focus
+The raw paper layer is under:
+- `../ref/papers/archive/`
+- `../ref/papers/inbox/`
 
-The repository currently needs the most distillation in the busiest or highest-context families:
-- `line.md`
-- `multi_panel.md`
-- `composite.md`
-- `numerical_simulation.md`
+The most useful curation companions are:
+- `../ref/papers/INSIGHTS.md`
+- `../ref/papers/SIMULATION.md`
+- `../samples/REFRESH_CANDIDATES.md`
 
-For a full-review map of simulation-oriented papers across both the archive and the inbox, also see:
-- `../pdf/SIMULATION_CURATION.md`
+## Promotion discipline
 
-## How an agent should use this directory
+When a new paper arrives, ask:
+1. does it add a genuinely new reusable structure?
+2. if not, does it sharpen an existing family note?
+3. if not, should it simply remain in the reference archive?
 
-1. choose the chart family from the data and user goal
-2. read the matching pattern note if it exists
-3. if the task is simulation-heavy, also read `numerical_simulation.md`
-4. start from the canonical starter sample for that family
-5. only open variant samples if a specific feature is required
-6. only fall back to raw references if the pattern note and samples are still insufficient
-
-## Promotion rules for new papers
-
-When a new paper or figure arrives, decide which bucket it currently seems to fit best:
-- **canonical sample** — promote only if it adds a broadly reusable structure
-- **variant sample** — keep only if it adds one important reusable feature without becoming a main starter
-- **pattern note** — summarize the idea here if the value is mostly conceptual
-- **archive only** — keep the PDF/reference without promoting it if it adds little retrieval value
-
-For already curated papers, see `../pdf/CURATED_INSIGHTS.md`.
-For simulation-heavy curation, see `../pdf/SIMULATION_CURATION.md`.
-For newly downloaded papers, see:
-- `../pdf/inbox/TRIAGE.md`
-- `../pdf/inbox/NUMERICAL_PRIORITY.md`
-
-For existing templates most likely to be refreshed by newer simulation papers, see `../samples/REFRESH_CANDIDATES.md`.
+The default should be restraint.

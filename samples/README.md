@@ -1,65 +1,54 @@
 # samples
 
-Finished plotting samples, organized by chart family.
+Finished plotting templates, organized by chart family.
 
-This directory is intentionally grouped by **visual form** rather than by paper source, because an agent usually retrieves reusable plotting templates more effectively by chart family first.
+This directory is grouped by **visual form**, not by source paper.
+That keeps retrieval practical: agents usually find the right template faster by structure than by domain topic.
 
 ## How to use this directory
 
-A practical search strategy is:
-1. choose the chart family that matches the target figure structure
-2. if a matching note exists under `../patterns/`, read it first
-3. if the task is simulation-heavy, also read `../patterns/numerical_simulation.md`
-4. open the category README
-5. start from the category's **canonical starter template**
-6. only open variant samples if a specific feature is required
-7. adapt the closest sample-level README and script
+A good working order is:
+1. identify the target figure family
+2. read the matching note in `../patterns/`
+3. if the task is simulation-heavy, also read:
+   - `../patterns/numerical_simulation.md`
+   - `../ref/papers/SIMULATION.md`
+4. open the relevant category README
+5. start from the family’s **canonical starter**
+6. only open variants when a specific structural detail is truly needed
 
-## Canonical starters vs variants
+## Canonical starters and variants
 
 Not every sample should be treated equally.
 
-- **canonical starters** are the main reusable templates an agent should try first
-- **variants** are useful, but should only be opened when their distinguishing feature is actually needed
+- **canonical starters** are the default templates an agent should try first
+- **variants** are narrower and should only be opened when their distinguishing feature is clearly relevant
 
-This distinction matters most in crowded families such as `line/` and `multi_panel/`.
+This matters most in the line and multi-panel families.
 
 ## Category overview
 
-- `bar/` — grouped bars and horizontal bar-style sensitivity charts
-- `line/` — curated single-panel line starters plus a few dense variants
-- `multi_panel/` — curated multi-panel starters plus a few structural variants
-- `scatter/` — sparse point plots, scatter charts, log-scatter charts, bubble scatter
-- `distribution/` — boxplots, violin plots, histograms
-- `heatmap/` — matrix-valued heatmaps
+- `bar/` — grouped bars and horizontal sensitivity summaries
+- `line/` — single-panel lines, inset lines, parameter scans
+- `multi_panel/` — validation pairs, compact repeats, dense grids, stacked metrics
+- `scatter/` — sparse point comparisons, log scatter, bubble scatter
+- `distribution/` — boxplot, violin, histogram
+- `heatmap/` — matrix heatmaps
 
-## Pattern notes
+## Pattern notes to read first
 
-Use these distilled notes before diving into too many raw references:
 - `../patterns/line.md`
 - `../patterns/multi_panel.md`
-- `../patterns/composite.md` when chart+image/schematic/field-map structure is involved
-- `../patterns/numerical_simulation.md` when simulation-heavy judgment matters
-
-For a repository-wide map of current simulation-heavy papers, see:
-- `../pdf/SIMULATION_CURATION.md`
-
-## When to search each category first
-
-- search `bar/` first when the target figure compares discrete categories
-- search `line/` first when one axis with continuous x-values is enough
-- search `multi_panel/` first when the figure is naturally split into repeated subplots
-- search `scatter/` first when individual observations matter more than smooth curves
-- search `distribution/` first when raw value distributions are the main message
-- search `heatmap/` first when the data is naturally a matrix
+- `../patterns/composite.md` when chart+image / field-map structure matters
+- `../patterns/numerical_simulation.md` when the figure is validation-heavy or simulation-oriented
 
 ## Sample contract
 
 Every sample directory should contain:
-- `plot.py` — the executable plotting script
-- `output.png` — the rendered result
-- `meta.json` — machine-readable metadata
-- `README.md` — reuse-oriented instructions for humans and agents
+- `plot.py`
+- `output.png`
+- `meta.json`
+- `README.md`
 
 ## Path pattern
 
@@ -67,10 +56,10 @@ Every sample directory should contain:
 samples/<category>/<sample_id>/
 ```
 
-Example:
+Examples:
 
 ```text
-samples/bar/sample_0001/
+samples/line/sample_0013/
 samples/multi_panel/sample_0003/
 samples/heatmap/sample_0015/
 ```

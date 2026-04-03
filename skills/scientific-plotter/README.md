@@ -12,7 +12,7 @@ Key bundled resources:
 - `../../patterns/README.md` — distilled plotting ideas that should be consulted before browsing many raw references
 - `../../patterns/line.md` — line-family curation and canonical starters
 - `../../patterns/multi_panel.md` — multi-panel curation and canonical starters
-- `../../patterns/composite.md` — ideas for chart+image/schematic/field-map composites that should stay above the raw-reference layer
-- `../../patterns/numerical_simulation.md` — high-weight soft guidance for simulation-oriented combustion plots
-- `../../pdf/SIMULATION_CURATION.md` — fuller simulation-heavy PDF curation map for refresh and pattern decisions
-- `../../samples/REFRESH_CANDIDATES.md` — existing templates most likely to be refreshed by newer simulation papers
+- `../../patterns/composite.md` — guidance for field-map, schematic, and chart composites
+- `../../patterns/numerical_simulation.md` — simulation-facing plotting judgment
+- `../../ref/papers/SIMULATION.md` — fuller review of the simulation-heavy paper set
+- `../../samples/REFRESH_CANDIDATES.md` — templates most likely to matter in future refresh decisions

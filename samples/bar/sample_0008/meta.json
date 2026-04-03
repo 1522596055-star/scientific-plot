@@ -1,8 +1,8 @@
 {
   "sample_id": "sample_0008",
   "chart_type": "two_panel_horizontal_bar",
-  "reference_image": "ref/pdf_selected/sample_0008_nh_no_sensitivity_bars.jpg",
-  "source_pdf": "pdf/nh_no_plif_plasma_assisted_nh3_h2_flames.pdf",
+  "reference_image": "ref/figures/selected/sample_0008_nh_no_sensitivity_bars.jpg",
+  "source_pdf": "ref/papers/archive/nh_no_plif_plasma_assisted_nh3_h2_flames.pdf",
   "data_sources": [
     "data/shared/categorical_measurements_v1.csv"
   ],

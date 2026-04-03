@@ -1,7 +1,7 @@
 {
   "sample_id": "sample_0001",
   "chart_type": "grouped_bar",
-  "reference_image": "ref/image_selected/sample_0001_grouped_bar_combustion_species.jpg",
+  "reference_image": "ref/figures/selected/sample_0001_grouped_bar_combustion_species.jpg",
   "reference_note": "ScienceDirect reference image used only for structural guidance.",
   "data_sources": [
     "data/shared/categorical_measurements_v1.csv"

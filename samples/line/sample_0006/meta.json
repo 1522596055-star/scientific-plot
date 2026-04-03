@@ -1,8 +1,8 @@
 {
   "sample_id": "sample_0006",
   "chart_type": "multi_line_parameter_curve",
-  "reference_image": "ref/pdf_selected/sample_0006_flame_coordinate_vs_flow.jpg",
-  "source_pdf": "pdf/premixed_flames_dominant_diffusion_source_mixture.pdf",
+  "reference_image": "ref/figures/selected/sample_0006_flame_coordinate_vs_flow.jpg",
+  "source_pdf": "ref/papers/archive/premixed_flames_dominant_diffusion_source_mixture.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],

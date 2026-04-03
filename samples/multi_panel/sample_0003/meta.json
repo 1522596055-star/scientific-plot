@@ -1,8 +1,8 @@
 {
   "sample_id": "sample_0003",
   "chart_type": "multi_panel_line_with_reference_points",
-  "reference_image": "ref/pdf_selected/sample_0003_flamelet_validation_grid.jpg",
-  "source_pdf": "pdf/four_fuel_stream_flamelet_pulverized_coal_ammonia_combustion.pdf",
+  "reference_image": "ref/figures/selected/sample_0003_flamelet_validation_grid.jpg",
+  "source_pdf": "ref/papers/archive/four_fuel_stream_flamelet_pulverized_coal_ammonia_combustion.pdf",
   "data_sources": [
     "data/shared/profile_series_v1.csv"
   ],
