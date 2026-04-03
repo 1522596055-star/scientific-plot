@@ -1,0 +1,19 @@
+temperature_K,fuel,ignition_delay_ms
+850,Jet-A,8.5
+900,Jet-A,4.8
+950,Jet-A,2.7
+1000,Jet-A,1.5
+1050,Jet-A,0.86
+1100,Jet-A,0.49
+850,HEFA,11.5
+900,HEFA,6.7
+950,HEFA,3.8
+1000,HEFA,2.2
+1050,HEFA,1.28
+1100,HEFA,0.74
+850,Cycloalkane blend,15.8
+900,Cycloalkane blend,9.4
+950,Cycloalkane blend,5.4
+1000,Cycloalkane blend,3.1
+1050,Cycloalkane blend,1.82
+1100,Cycloalkane blend,1.08

@@ -14,5 +14,10 @@
   },
   "notes": [
     "Selected as the most reusable figure from its source PDF."
-  ]
+  ],
+  "curation": {
+    "role": "variant",
+    "pattern_family": "two-panel-horizontal-sensitivity-bars",
+    "why": "Useful horizontal-bar variant when ignition-delay sensitivity framing matters more than the default NH/NO example."
+  }
 }

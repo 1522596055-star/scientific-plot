@@ -14,5 +14,10 @@
   },
   "notes": [
     "Selected as the most reusable figure from its source PDF."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "log-scatter",
+    "why": "Best starter for positive-response scatter plots that need a logarithmic y-axis."
+  }
 }

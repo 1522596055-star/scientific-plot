@@ -30,5 +30,10 @@
   "notes": [
     "The categorical data structure was compressed to one row per condition-category pair.",
     "The rendered plot intentionally simplifies legend and text annotations to keep the sample easy to reproduce."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "grouped-vertical-bars",
+    "why": "Best default starter for grouped category comparisons with a small number of named series."
+  }
 }

@@ -14,5 +14,10 @@
   },
   "notes": [
     "Selected as the most reusable figure from its source PDF."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "two-panel-horizontal-sensitivity-bars",
+    "why": "Best starter for signed horizontal sensitivity bars split into two aligned panels."
+  }
 }

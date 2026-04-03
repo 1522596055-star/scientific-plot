@@ -14,5 +14,10 @@
   },
   "notes": [
     "Selected as the most reusable figure from its source PDF."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "two-panel-scatter-comparison",
+    "why": "Best starter for sparse scientific scatter comparisons split across two coordinated panels."
+  }
 }

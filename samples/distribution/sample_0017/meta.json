@@ -14,5 +14,10 @@
   },
   "notes": [
     "Coverage sample added to improve chart-type diversity in the dataset."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "grouped-violin",
+    "why": "Best starter when distribution shape matters more than quartile-only summaries."
+  }
 }

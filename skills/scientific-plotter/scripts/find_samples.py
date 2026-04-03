@@ -43,19 +43,12 @@ STOPWORDS = {
     "should",
     "main",
     "data",
-    "axis",
-    "axes",
-    "panel",
-    "panels",
     "sample",
 }
 ALIASES = {
     "bars": "bar",
-    "grouped": "grouped",
     "categories": "category",
     "categorical": "category",
-    "subplot": "panel",
-    "subplots": "panel",
     "curves": "line",
     "curve": "line",
     "profiles": "profile",
@@ -69,6 +62,26 @@ ALIASES = {
     "bubbles": "bubble",
     "matrix": "heatmap",
     "correlation": "heatmap",
+    "subplot": "panel",
+    "subplots": "panel",
+    "two-panel": "two_panel",
+    "single-panel": "single_panel",
+    "multi-panel": "multi_panel",
+    "x-axis": "x_axis",
+    "y-axis": "y_axis",
+    "shared-x": "shared_x",
+    "shared-axis": "shared_axis",
+}
+GENERIC_AVOID_MATCH_TOKENS = {
+    "axis",
+    "axes",
+    "x_axis",
+    "y_axis",
+    "line",
+    "panel",
+    "shared",
+    "two",
+    "single",
 }
 
 
@@ -90,13 +103,18 @@ class Sample:
 
 
 def normalize_tokens(text: str) -> list[str]:
-    raw = re.findall(r"[a-z0-9_+-]+", text.lower())
+    raw_tokens = re.findall(r"[a-z0-9_+-]+", text.lower())
     tokens: list[str] = []
-    for token in raw:
-        normalized = ALIASES.get(token, token)
-        if len(normalized) < 2 or normalized in STOPWORDS:
-            continue
-        tokens.append(normalized)
+    for raw in raw_tokens:
+        normalized = ALIASES.get(raw, raw).replace("-", "_")
+        variants = [normalized]
+        if "_" in normalized:
+            variants.extend(part for part in normalized.split("_") if part)
+        for variant in variants:
+            candidate = ALIASES.get(variant, variant)
+            if len(candidate) < 2 or candidate in STOPWORDS:
+                continue
+            tokens.append(candidate)
     return tokens
 
 
@@ -131,7 +149,11 @@ def load_samples() -> list[Sample]:
                 data_sources=meta.get("data_sources", []),
                 reuse_when=extract_bullets(readme_text, "Reuse this sample when"),
                 avoid_when=extract_bullets(readme_text, "Do not use this sample when"),
-                siblings=[item.strip("`") for item in extract_bullets(readme_text, "Closest sibling samples") if item != "None yet in this category."],
+                siblings=[
+                    item.strip("`")
+                    for item in extract_bullets(readme_text, "Closest sibling samples")
+                    if item != "None yet in this category."
+                ],
                 curation_role=curation.get("role"),
                 pattern_family=curation.get("pattern_family"),
             )
@@ -146,8 +168,14 @@ def weighted_overlap(query: Counter[str], text: str, weight: float) -> float:
     return sum(min(query[token], target[token]) for token in query) * weight
 
 
+def query_has_any(query_text: str, phrases: list[str]) -> bool:
+    query = query_text.lower()
+    return any(phrase in query for phrase in phrases)
+
+
 def heuristic_bonus(query_text: str, sample: Sample) -> tuple[float, list[str]]:
     query = query_text.lower()
+    sample_reuse_text = " ".join(sample.reuse_when).lower()
     bonus = 0.0
     reasons: list[str] = []
 
@@ -158,19 +186,57 @@ def heuristic_bonus(query_text: str, sample: Sample) -> tuple[float, list[str]]:
             reasons.append(reason)
 
     add_if(any(word in query for word in ["bar", "category", "sensitivity"]) and sample.category == "bar", 5.0, "bar-family heuristic")
-    add_if(any(word in query for word in ["line", "profile", "trend", "scan", "inset"]) and sample.category == "line", 5.0, "line-family heuristic")
-    add_if(any(word in query for word in ["multi", "subplot", "subplots", "panel", "2x", "3x"]) and sample.category == "multi_panel", 6.0, "multi-panel heuristic")
-    add_if(any(word in query for word in ["scatter", "point", "points", "bubble"]) and sample.category == "scatter", 5.0, "scatter-family heuristic")
+    add_if(any(word in query for word in ["line", "profile", "trend", "scan", "inset"]) and sample.category == "line", 4.5, "line-family heuristic")
+    add_if(any(word in query for word in ["multi", "subplot", "subplots", "panel", "2x", "3x"]) and sample.category == "multi_panel", 6.5, "multi-panel heuristic")
+    add_if(any(word in query for word in ["scatter", "point", "points", "bubble"]) and sample.category == "scatter", 5.5, "scatter-family heuristic")
     add_if(any(word in query for word in ["boxplot", "violin", "histogram", "distribution"]) and sample.category == "distribution", 6.0, "distribution-family heuristic")
     add_if(any(word in query for word in ["heatmap", "matrix", "correlation"]) and sample.category == "heatmap", 7.0, "heatmap-family heuristic")
     add_if("grouped" in query and "grouped" in sample.chart_type, 4.0, "grouped-bar match")
     add_if("horizontal" in query and "horizontal" in sample.chart_type, 4.0, "horizontal-bar match")
-    add_if(any(word in query for word in ["two-panel", "two panel", "stacked panels", "top panel", "bottom panel"]) and sample.chart_type.startswith("two_panel"), 4.0, "two-panel layout match")
+    add_if(query_has_any(query, ["two-panel", "two panel", "stacked panels", "top panel", "bottom panel"]) and sample.chart_type.startswith("two_panel"), 5.0, "two-panel layout match")
+    sample_shared_x = (
+        any(phrase in sample_reuse_text for phrase in ["shared x-axis", "same x-axis", "share the same x-axis"])
+        or "shared-x" in (sample.pattern_family or "")
+        or "shared_x" in sample.chart_type
+    )
+    add_if(query_has_any(query, ["shared x-axis", "shared x axis", "shared-x", "shared x"]) and sample_shared_x, 3.5, "shared-x layout match")
     add_if("inset" in query and any("inset" in item.lower() for item in sample.reuse_when), 3.0, "inset match")
-    add_if("log" in query and ("log" in " ".join(sample.reuse_when).lower() or "log" in sample.chart_type.lower()), 3.0, "log-axis match")
-    add_if(any(word in query for word in ["error", "uncertainty"]) and "error" in " ".join(sample.reuse_when).lower(), 3.0, "error-bar match")
-    add_if("bubble" in query and "bubble" in " ".join(sample.reuse_when).lower(), 4.0, "bubble match")
+    add_if("log" in query and ("log" in sample_reuse_text or "log" in sample.chart_type.lower()), 3.0, "log-axis match")
+    add_if(any(word in query for word in ["error", "uncertainty", "spread"]) and any(word in sample_reuse_text for word in ["error", "uncertainty", "spread"]), 3.0, "uncertainty match")
+    add_if("bubble" in query and "bubble" in sample_reuse_text, 5.0, "bubble match")
     return bonus, reasons
+
+
+def structural_penalty(query_text: str, query_counter: Counter[str], sample: Sample) -> tuple[float, list[str]]:
+    query = query_text.lower()
+    penalty = 0.0
+    reasons: list[str] = []
+
+    filtered_query_counter = Counter(
+        {token: count for token, count in query_counter.items() if token not in GENERIC_AVOID_MATCH_TOKENS}
+    )
+    avoid_penalty = weighted_overlap(filtered_query_counter, " ".join(sample.avoid_when), 3.0)
+    if avoid_penalty:
+        penalty += avoid_penalty
+        reasons.append("avoid_when penalty")
+
+    if query_has_any(query, ["two-panel", "two panel", "stacked panels", "top panel", "bottom panel", "shared x-axis", "shared x axis"]) and sample.category != "multi_panel":
+        penalty += 4.5
+        reasons.append("explicit multi-panel mismatch")
+    if query_has_any(query, ["single-panel", "single panel", "single axis", "one axis", "overlay"]) and sample.category == "multi_panel":
+        penalty += 3.0
+        reasons.append("single-panel mismatch")
+    if "bubble" in query and sample.category != "scatter":
+        penalty += 5.0
+        reasons.append("bubble-layout mismatch")
+    if any(word in query for word in ["heatmap", "matrix", "correlation"]) and sample.category != "heatmap":
+        penalty += 5.0
+        reasons.append("heatmap mismatch")
+    if any(word in query for word in ["boxplot", "violin", "histogram", "distribution"]) and sample.category != "distribution":
+        penalty += 4.0
+        reasons.append("distribution-family mismatch")
+
+    return penalty, reasons
 
 
 def score_sample(query_text: str, sample: Sample) -> tuple[float, list[str]]:
@@ -185,8 +251,11 @@ def score_sample(query_text: str, sample: Sample) -> tuple[float, list[str]]:
     score += weighted_overlap(query_counter, (sample.pattern_family or "").replace("-", " "), 2.0)
 
     if sample.curation_role == "canonical":
-        score += 1.5
+        score += 2.0
         reasons.append("canonical starter bonus")
+    elif sample.curation_role == "variant":
+        score -= 0.5
+        reasons.append("variant specificity penalty")
 
     query_tokens = set(query_counter)
     if sample.pattern_family == "parameter-scan-branch-curve" and not ({"parameter", "scan", "branch", "stable", "unstable"} & query_tokens):
@@ -195,14 +264,28 @@ def score_sample(query_text: str, sample: Sample) -> tuple[float, list[str]]:
     if sample.pattern_family == "dense-dual-encoded-line" and not ({"color", "linestyle", "legend", "overlay"} & query_tokens):
         score -= 2.0
         reasons.append("dense-encoding specificity penalty")
+    if sample.pattern_family == "two-panel-shared-x-with-baselines" and not ({"baseline", "reference", "control"} & query_tokens):
+        score -= 8.0
+        reasons.append("baseline/reference specificity penalty")
 
-    overlap_tokens = sorted({token for token in query_counter if token in Counter(normalize_tokens(' '.join(sample.reuse_when + [sample.chart_type, sample.category, sample.pattern_family or ''])))})
+    overlap_tokens = sorted(
+        {
+            token
+            for token in query_counter
+            if token in Counter(normalize_tokens(" ".join(sample.reuse_when + [sample.chart_type, sample.category, sample.pattern_family or ""])))
+        }
+    )
     if overlap_tokens:
         reasons.append("matched tokens: " + ", ".join(overlap_tokens[:8]))
 
     bonus, bonus_reasons = heuristic_bonus(query_text, sample)
     score += bonus
     reasons.extend(bonus_reasons)
+
+    penalty, penalty_reasons = structural_penalty(query_text, query_counter, sample)
+    score -= penalty
+    reasons.extend(penalty_reasons)
+
     return score, reasons
 
 

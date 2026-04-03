@@ -14,5 +14,10 @@
   },
   "notes": [
     "Coverage sample added to improve chart-type diversity in the dataset."
-  ]
+  ],
+  "curation": {
+    "role": "canonical",
+    "pattern_family": "single-variable-histogram",
+    "why": "Best starter for one-dimensional frequency distributions shown as a single histogram."
+  }
 }

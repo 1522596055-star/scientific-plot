@@ -32,6 +32,22 @@
       "files": [
         "evals/fixtures/treatment_repeats.csv"
       ]
+    },
+    {
+      "id": 5,
+      "prompt": "This ignition-delay scan spans a broad positive range. Please choose a paper-style visualization and return both the png and the plotting script.",
+      "expected_output": "The skill should infer a log-scale scatter or line figure with temperature-like x values and ignition delay on a logarithmic y-axis, then produce plot.py plus output image.",
+      "files": [
+        "evals/fixtures/ignition_delay_scan.csv"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "These points come from a clustered embedding and bubble size matters. Pick a publication-style visualization and return both the rendered image and the Python plotting script.",
+      "expected_output": "The skill should infer a bubble-scatter layout with x/y coordinates, cluster grouping, and marker size encoding, then produce plot.py plus output image.",
+      "files": [
+        "evals/fixtures/cluster_embedding_points.csv"
+      ]
     }
   ]
 }
